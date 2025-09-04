@@ -133,4 +133,17 @@ public partial class MainWindow
     {
         _mainWindowViewModel?.SwitchStatsDropDownState();
     }
+
+    private void NetworkDebugButton_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            var debugWindow = new NetworkDebugWindow();
+            debugWindow.Show();
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, "Erro ao abrir Network Debug Window");
+        }
+    }
 }

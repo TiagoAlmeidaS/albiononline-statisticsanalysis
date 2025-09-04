@@ -71,6 +71,7 @@ public class NetworkManager
         builder.AddEventHandler(new NewMobEventHandler(trackingController));
         builder.AddEventHandler(new ActiveSpellEffectsUpdateEventHandler(trackingController));
         builder.AddEventHandler(new UpdateFactionStandingEventHandler(trackingController));
+        builder.AddEventHandler(new FishingCatchEventHandler(trackingController));
         //builder.AddEventHandler(new ReceivedSeasonPointsEventHandler(trackingController));
         builder.AddEventHandler(new MightAndFavorReceivedEventHandler(trackingController));
         builder.AddEventHandler(new BankVaultInfoEventHandler(trackingController));

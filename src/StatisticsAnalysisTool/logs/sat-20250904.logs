@@ -1,0 +1,60 @@
+2025-09-04 10:57:36.123 -03:00 [INF] Tool started with v8.5.13.19674
+2025-09-04 10:57:36.470 -03:00 [INF] OS Version: Microsoft Windows 10.0.19045 - "X64" | Processor: Intel(R) Core(TM) i5-10400F CPU @ 2.90GHz | Video: NVIDIA GeForce RTX 3060 | Is Admin: false | Is Debug: false | Active Networks: Ethernet, Loopback Pseudo-Interface 1, vEthernet (Default Switch), Conexão Local* 6-WFP Native MAC Layer LightWeight Filter-0000, Conexão Local* 6-Npcap Packet Driver (NPCAP)-0000, Conexão Local* 6-QoS Packet Scheduler-0000, Conexão Local* 7-WFP Native MAC Layer LightWeight Filter-0000, Conexão Local* 7-Npcap Packet Driver (NPCAP)-0000, Conexão Local* 7-QoS Packet Scheduler-0000, Conexão Local* 8-WFP Native MAC Layer LightWeight Filter-0000, Conexão Local* 8-Npcap Packet Driver (NPCAP)-0000, Conexão Local* 8-QoS Packet Scheduler-0000, vSwitch (Default Switch)-Hyper-V Virtual Switch Extension Filter-0000, Ethernet-WFP Native MAC Layer LightWeight Filter-0000, Ethernet-Npcap Packet Driver (NPCAP)-0000, Ethernet-QoS Packet Scheduler-0000, Ethernet-WFP 802.3 MAC Layer LightWeight Filter-0000, vEthernet (Default Switch)-WFP Native MAC Layer LightWeight Filter-0000, vEthernet (Default Switch)-Npcap Packet Driver (NPCAP)-0000, vEthernet (Default Switch)-QoS Packet Scheduler-0000, vEthernet (Default Switch)-WFP 802.3 MAC Layer LightWeight Filter-0000, vSwitch (Default Switch), Conexão Local* 6, Conexão Local* 7, Conexão Local* 8
+2025-09-04 10:57:50.612 -03:00 [INF] Used packet provider: "Npcap"
+2025-09-04 10:57:50.899 -03:00 [WRN] Load failed for E:\projects\games\albiononline-statisticsanalysis\src\StatisticsAnalysisTool\bin\Debug\net9.0-windows\UserData\ActiveAlerts.json. Returning default.
+2025-09-04 10:57:53.517 -03:00 [INF] Npcap[ID:0]: opening \Device\NPF_{C3DB84FB-5599-443B-9F8F-E9011FEA7D4A}:WAN Miniport (Network Monitor) (Type="Ethernet", Flags="Up, Running, ConnectionStatusConnected")
+2025-09-04 10:57:53.559 -03:00 [INF] Npcap[ID:0]: filter set => (udp port 5055 or udp port 5056)
+2025-09-04 10:57:53.560 -03:00 [INF] Npcap[ID:1]: opening \Device\NPF_{43C4B4AC-E0E9-433A-A98A-AB61E5837DAB}:WAN Miniport (IPv6) (Type="Ethernet", Flags="Up, Running, ConnectionStatusConnected")
+2025-09-04 10:57:53.564 -03:00 [INF] Npcap[ID:1]: filter set => (udp port 5055 or udp port 5056)
+2025-09-04 10:57:53.564 -03:00 [INF] Npcap[ID:2]: opening \Device\NPF_{714DCB56-8C30-4653-A2F0-5E1FA9EA0D5E}:WAN Miniport (IP) (Type="Ethernet", Flags="Up, Running, ConnectionStatusConnected")
+2025-09-04 10:57:53.565 -03:00 [INF] Npcap[ID:2]: filter set => (udp port 5055 or udp port 5056)
+2025-09-04 10:57:53.565 -03:00 [INF] Npcap[ID:3]: opening \Device\NPF_{E66FA225-7DE8-46E6-B203-CAC05FA380CD}:Hyper-V Virtual Ethernet Adapter (Type="Ethernet", Flags="Up, Running, ConnectionStatusConnected")
+2025-09-04 10:57:53.565 -03:00 [INF] Npcap[ID:3]: filter set => (udp port 5055 or udp port 5056)
+2025-09-04 10:57:53.565 -03:00 [INF] Npcap[ID:4]: opening \Device\NPF_{E10B8B95-75EB-4B4B-ABF9-0B994DBC966E}:Bluetooth Device (Personal Area Network) (Type="Ethernet", Flags="Up, Running, Wireless, ConnectionStatusDisconnected")
+2025-09-04 10:57:53.566 -03:00 [INF] Npcap[ID:4]: filter set => (udp port 5055 or udp port 5056)
+2025-09-04 10:57:53.566 -03:00 [INF] Npcap[ID:5]: opening \Device\NPF_{7E60889F-6564-4530-9A05-3081EE56920F}:Intel(R) Ethernet Connection (14) I219-V (Type="Ethernet", Flags="Up, Running, ConnectionStatusConnected")
+2025-09-04 10:57:53.566 -03:00 [INF] Npcap[ID:5]: filter set => (udp port 5055 or udp port 5056)
+2025-09-04 10:57:53.567 -03:00 [INF] Npcap[ID:6]: skip loopback \Device\NPF_Loopback:Adapter for loopback traffic capture
+2025-09-04 10:57:53.567 -03:00 [INF] Npcap: capture started on 6 device(s), filter: (udp port 5055 or udp port 5056)
+2025-09-04 10:57:53.815 -03:00 [INF] Npcap: releasing locked adapter due to inactivity
+2025-09-04 10:57:53.816 -03:00 [INF] Npcap: locked to adapter(Device: Intel(R) Ethernet Connection (14) I219-V) after 1 valid packets
+2025-09-04 10:59:34.729 -03:00 [INF] Saved E:\projects\games\albiononline-statisticsanalysis\src\StatisticsAnalysisTool\bin\Debug\net9.0-windows\UserData\Vaults.json via tmp-swap.
+2025-09-04 10:59:34.730 -03:00 [INF] Vault saved
+2025-09-04 10:59:34.733 -03:00 [INF] Saved E:\projects\games\albiononline-statisticsanalysis\src\StatisticsAnalysisTool\bin\Debug\net9.0-windows\UserData\Trades.json via tmp-swap.
+2025-09-04 10:59:34.733 -03:00 [INF] Trades saved
+2025-09-04 10:59:34.735 -03:00 [INF] Saved E:\projects\games\albiononline-statisticsanalysis\src\StatisticsAnalysisTool\bin\Debug\net9.0-windows\UserData\TreasureStats.json via tmp-swap.
+2025-09-04 10:59:34.735 -03:00 [INF] Treasure saved
+2025-09-04 10:59:34.736 -03:00 [INF] Saved E:\projects\games\albiononline-statisticsanalysis\src\StatisticsAnalysisTool\bin\Debug\net9.0-windows\UserData\Stats.json via tmp-swap.
+2025-09-04 10:59:34.736 -03:00 [INF] Statistics saved
+2025-09-04 10:59:34.737 -03:00 [INF] Saved E:\projects\games\albiononline-statisticsanalysis\src\StatisticsAnalysisTool\bin\Debug\net9.0-windows\UserData\DungeonRuns.json via tmp-swap.
+2025-09-04 10:59:34.738 -03:00 [INF] Dungeons saved
+2025-09-04 10:59:34.739 -03:00 [INF] Saved E:\projects\games\albiononline-statisticsanalysis\src\StatisticsAnalysisTool\bin\Debug\net9.0-windows\UserData\Gathering.json via tmp-swap.
+2025-09-04 10:59:34.739 -03:00 [INF] Gathering saved
+2025-09-04 10:59:34.741 -03:00 [INF] Saved E:\projects\games\albiononline-statisticsanalysis\src\StatisticsAnalysisTool\bin\Debug\net9.0-windows\UserData\Guild.json via tmp-swap.
+2025-09-04 10:59:34.741 -03:00 [INF] Guild data saved
+2025-09-04 10:59:34.743 -03:00 [INF] Saved E:\projects\games\albiononline-statisticsanalysis\src\StatisticsAnalysisTool\bin\Debug\net9.0-windows\UserData\DamageMeterSnapshots.json via tmp-swap.
+2025-09-04 10:59:34.743 -03:00 [INF] Damage Meter snapshots saved
+2025-09-04 10:59:34.745 -03:00 [INF] Saved E:\projects\games\albiononline-statisticsanalysis\src\StatisticsAnalysisTool\bin\Debug\net9.0-windows\UserData\Market.json via tmp-swap.
+2025-09-04 10:59:34.745 -03:00 [INF] Market data saved
+2025-09-04 10:59:34.749 -03:00 [INF] Saved E:\projects\games\albiononline-statisticsanalysis\src\StatisticsAnalysisTool\bin\Debug\net9.0-windows\UserData\EstimatedMarketValues.json via tmp-swap.
+2025-09-04 10:59:34.750 -03:00 [INF] Estimated market values saved
+2025-09-04 11:01:48.326 -03:00 [INF] Saved E:\projects\games\albiononline-statisticsanalysis\src\StatisticsAnalysisTool\bin\Debug\net9.0-windows\UserData\Vaults.json via tmp-swap.
+2025-09-04 11:01:48.327 -03:00 [INF] Vault saved
+2025-09-04 11:01:48.330 -03:00 [INF] Saved E:\projects\games\albiononline-statisticsanalysis\src\StatisticsAnalysisTool\bin\Debug\net9.0-windows\UserData\Trades.json via tmp-swap.
+2025-09-04 11:01:48.330 -03:00 [INF] Trades saved
+2025-09-04 11:01:48.331 -03:00 [INF] Saved E:\projects\games\albiononline-statisticsanalysis\src\StatisticsAnalysisTool\bin\Debug\net9.0-windows\UserData\TreasureStats.json via tmp-swap.
+2025-09-04 11:01:48.331 -03:00 [INF] Treasure saved
+2025-09-04 11:01:48.333 -03:00 [INF] Saved E:\projects\games\albiononline-statisticsanalysis\src\StatisticsAnalysisTool\bin\Debug\net9.0-windows\UserData\Stats.json via tmp-swap.
+2025-09-04 11:01:48.333 -03:00 [INF] Statistics saved
+2025-09-04 11:01:48.334 -03:00 [INF] Saved E:\projects\games\albiononline-statisticsanalysis\src\StatisticsAnalysisTool\bin\Debug\net9.0-windows\UserData\DungeonRuns.json via tmp-swap.
+2025-09-04 11:01:48.334 -03:00 [INF] Dungeons saved
+2025-09-04 11:01:48.336 -03:00 [INF] Saved E:\projects\games\albiononline-statisticsanalysis\src\StatisticsAnalysisTool\bin\Debug\net9.0-windows\UserData\Gathering.json via tmp-swap.
+2025-09-04 11:01:48.336 -03:00 [INF] Gathering saved
+2025-09-04 11:01:48.337 -03:00 [INF] Saved E:\projects\games\albiononline-statisticsanalysis\src\StatisticsAnalysisTool\bin\Debug\net9.0-windows\UserData\Guild.json via tmp-swap.
+2025-09-04 11:01:48.337 -03:00 [INF] Guild data saved
+2025-09-04 11:01:48.339 -03:00 [INF] Saved E:\projects\games\albiononline-statisticsanalysis\src\StatisticsAnalysisTool\bin\Debug\net9.0-windows\UserData\DamageMeterSnapshots.json via tmp-swap.
+2025-09-04 11:01:48.340 -03:00 [INF] Damage Meter snapshots saved
+2025-09-04 11:01:48.342 -03:00 [INF] Saved E:\projects\games\albiononline-statisticsanalysis\src\StatisticsAnalysisTool\bin\Debug\net9.0-windows\UserData\Market.json via tmp-swap.
+2025-09-04 11:01:48.342 -03:00 [INF] Market data saved
+2025-09-04 11:01:48.345 -03:00 [INF] Saved E:\projects\games\albiononline-statisticsanalysis\src\StatisticsAnalysisTool\bin\Debug\net9.0-windows\UserData\EstimatedMarketValues.json via tmp-swap.
+2025-09-04 11:01:48.345 -03:00 [INF] Estimated market values saved

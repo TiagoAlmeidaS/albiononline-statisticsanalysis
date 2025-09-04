@@ -5,8 +5,11 @@ using StatisticsAnalysisTool.Common.UserSettings;
 using StatisticsAnalysisTool.EstimatedMarketValue;
 using StatisticsAnalysisTool.Models;
 using StatisticsAnalysisTool.Models.NetworkModel;
+using StatisticsAnalysisTool.Network.Events;
 using StatisticsAnalysisTool.Network.Manager;
 using StatisticsAnalysisTool.Properties;
+using StatisticsAnalysisTool.Diagnostics;
+using System.Reflection;
 using StatisticsAnalysisTool.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -160,6 +163,62 @@ public class GatheringController
         if (_activeFishingEvent is { } fishingEvent)
         {
             fishingEvent.IsClosedForEvents = true;
+        }
+    }
+
+    public void OnFishingCatch(FishingCatchEvent fishingCatchEvent)
+    {
+        try
+        {
+            Log.Information("GatheringController.OnFishingCatch: Iniciando processamento - EventId={EventId}, ItemIndex={ItemIndex}, IsSuccessful={IsSuccessful}, Timestamp={Timestamp}", 
+                fishingCatchEvent.EventId, fishingCatchEvent.ItemIndex, fishingCatchEvent.IsSuccessful, fishingCatchEvent.Timestamp);
+            
+            DebugConsole.WriteInfo(MethodBase.GetCurrentMethod()?.DeclaringType, 
+                $"GatheringController.OnFishingCatch: Iniciando processamento - EventId={fishingCatchEvent.EventId}, ItemIndex={fishingCatchEvent.ItemIndex}, IsSuccessful={fishingCatchEvent.IsSuccessful}, Timestamp={fishingCatchEvent.Timestamp}", 
+                "#5196A6");
+
+            if (_activeFishingEvent is { IsClosedForEvents: false } fishingEvent)
+            {
+                Log.Information("GatheringController.OnFishingCatch: Evento de pesca ativo encontrado - EventId={ActiveEventId}, UsedFishingRod={UsedFishingRod}", 
+                    fishingEvent.EventId, fishingEvent.UsedFishingRod);
+                
+                DebugConsole.WriteInfo(MethodBase.GetCurrentMethod()?.DeclaringType, 
+                    $"GatheringController.OnFishingCatch: Evento de pesca ativo encontrado - EventId={fishingEvent.EventId}, UsedFishingRod={fishingEvent.UsedFishingRod}", 
+                    "#5196A6");
+
+                // Log detalhado da fisgada
+                Log.Information("GatheringController.OnFishingCatch: Fisgada detectada - EventId={EventId}, ItemIndex={ItemIndex}, IsSuccessful={IsSuccessful}, Timestamp={Timestamp}", 
+                    fishingCatchEvent.EventId, fishingCatchEvent.ItemIndex, fishingCatchEvent.IsSuccessful, fishingCatchEvent.Timestamp);
+                
+                DebugConsole.WriteInfo(MethodBase.GetCurrentMethod()?.DeclaringType, 
+                    $"GatheringController.OnFishingCatch: Fisgada detectada - EventId={fishingCatchEvent.EventId}, ItemIndex={fishingCatchEvent.ItemIndex}, IsSuccessful={fishingCatchEvent.IsSuccessful}, Timestamp={fishingCatchEvent.Timestamp}", 
+                    "#5196A6");
+
+                // Aqui você pode adicionar lógica adicional como:
+                // - Contar tentativas de fisgada
+                // - Atualizar estatísticas
+                // - Enviar notificações
+                // - Registrar logs detalhados
+                
+                Log.Information("GatheringController.OnFishingCatch: Processamento da fisgada concluído com sucesso");
+                DebugConsole.WriteInfo(MethodBase.GetCurrentMethod()?.DeclaringType, 
+                    "GatheringController.OnFishingCatch: Processamento da fisgada concluído com sucesso", 
+                    "#5196A6");
+            }
+            else
+            {
+                Log.Warning("GatheringController.OnFishingCatch: Nenhum evento de pesca ativo encontrado ou evento já fechado - EventId={EventId}, ItemIndex={ItemIndex}, IsSuccessful={IsSuccessful}", 
+                    fishingCatchEvent.EventId, fishingCatchEvent.ItemIndex, fishingCatchEvent.IsSuccessful);
+                
+                DebugConsole.WriteWarn(MethodBase.GetCurrentMethod()?.DeclaringType, 
+                    new Exception($"Nenhum evento de pesca ativo encontrado ou evento já fechado - EventId={fishingCatchEvent.EventId}, ItemIndex={fishingCatchEvent.ItemIndex}, IsSuccessful={fishingCatchEvent.IsSuccessful}"));
+            }
+        }
+        catch (Exception e)
+        {
+            Log.Error(e, "GatheringController.OnFishingCatch: Erro ao processar evento de fisgada - EventId={EventId}, ItemIndex={ItemIndex}, IsSuccessful={IsSuccessful}", 
+                fishingCatchEvent.EventId, fishingCatchEvent.ItemIndex, fishingCatchEvent.IsSuccessful);
+            DebugConsole.WriteError(MethodBase.GetCurrentMethod()?.DeclaringType, e);
         }
     }
 
