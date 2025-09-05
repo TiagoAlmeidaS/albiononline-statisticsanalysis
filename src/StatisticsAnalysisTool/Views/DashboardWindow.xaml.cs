@@ -58,4 +58,5 @@ public partial class DashboardWindow
 
         if (e.ClickCount == 2 && WindowState == WindowState.Maximized) WindowState = WindowState.Normal;
     }
+
 }

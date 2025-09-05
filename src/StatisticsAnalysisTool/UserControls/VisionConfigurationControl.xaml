@@ -1,0 +1,331 @@
+<UserControl x:Class="StatisticsAnalysisTool.UserControls.VisionConfigurationControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:StatisticsAnalysisTool.ViewModels"
+             xmlns:fa5="http://schemas.fontawesome.com/icons/"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance Type=viewModels:VisionConfigurationViewModel}">
+    
+    <UserControl.Resources>
+        <Style x:Key="HeaderText" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="{StaticResource SolidColorBrush.Text.1}"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+        
+        <Style x:Key="SectionText" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="{StaticResource SolidColorBrush.Text.1}"/>
+            <Setter Property="Margin" Value="0,10,0,5"/>
+        </Style>
+        
+        <Style x:Key="InfoLabel" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="{StaticResource SolidColorBrush.Text.1}"/>
+            <Setter Property="Margin" Value="0,0,5,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        
+        <Style x:Key="ValueLabel" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource SolidColorBrush.Text.2}"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        
+        <Style x:Key="StatusIndicator" TargetType="Ellipse">
+            <Setter Property="Width" Value="10"/>
+            <Setter Property="Height" Value="10"/>
+            <Setter Property="Margin" Value="0,0,5,0"/>
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Header com Status -->
+        <Border Grid.Row="0" Background="{StaticResource SolidColorBrush.Background.2}" 
+                CornerRadius="5" Margin="5" Padding="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <!-- Status do Sistema de Visão -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Ellipse Style="{StaticResource StatusIndicator}" Fill="{Binding VisionStatusColor}"/>
+                    <TextBlock Text="{Binding VisionStatusText}" Style="{StaticResource InfoLabel}" FontSize="14"/>
+                    <TextBlock Text="|" Margin="10,0" Foreground="{StaticResource SolidColorBrush.Text.3}"/>
+                    <TextBlock Text="Templates:" Style="{StaticResource InfoLabel}"/>
+                    <TextBlock Text="{Binding ValidTemplatesCount}" Style="{StaticResource ValueLabel}"/>
+                    <TextBlock Text="/" Style="{StaticResource ValueLabel}"/>
+                    <TextBlock Text="{Binding TotalTemplatesCount}" Style="{StaticResource ValueLabel}"/>
+                    <TextBlock Text="|" Margin="10,0" Foreground="{StaticResource SolidColorBrush.Text.3}"/>
+                    <TextBlock Text="Detector:" Style="{StaticResource InfoLabel}"/>
+                    <TextBlock Text="{Binding CurrentDetectorType}" Style="{StaticResource ValueLabel}"/>
+                </StackPanel>
+                
+                <!-- Controles Rápidos -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button Content="Validar Templates" Width="120" Height="30" Margin="5,0"
+                            Command="{Binding ValidateTemplatesCommand}"
+                            Background="{StaticResource SolidColorBrush.Accent.Blue.4}"/>
+                    <Button Content="Testar Detecção" Width="120" Height="30" Margin="5,0"
+                            Command="{Binding TestDetectionCommand}"
+                            Background="{StaticResource SolidColorBrush.Accent.Green.4}"/>
+                    <Button Content="Aplicar Config" Width="120" Height="30" Margin="5,0"
+                            Command="{Binding ApplyConfigurationCommand}"
+                            Background="{StaticResource SolidColorBrush.Accent.Orange.4}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        
+        <!-- Conteúdo Principal -->
+        <Grid Grid.Row="1" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <GridSplitter Grid.Column="1" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext" 
+                          HorizontalAlignment="Stretch" Background="{StaticResource SolidColorBrush.Accent.Blue.4}"/>
+            
+            <!-- Painel Principal - Configurações e Templates -->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <GridSplitter Grid.Row="1" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext" 
+                              HorizontalAlignment="Stretch" Background="{StaticResource SolidColorBrush.Accent.Blue.4}"/>
+                
+                <!-- Configurações de Templates -->
+                <Border Grid.Row="0" Background="{StaticResource SolidColorBrush.Background.2}" 
+                        CornerRadius="5" Margin="0,0,0,2" Padding="10">
+                    <ScrollViewer>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                <fa5:ImageAwesome Icon="Solid_Image" Foreground="{StaticResource SolidColorBrush.Text.1}" 
+                                                  Width="20" Height="20" Margin="0,0,5,0"/>
+                                <TextBlock Text="Configuração de Templates" Style="{StaticResource HeaderText}"/>
+                            </StackPanel>
+                            
+                            <!-- Configurações Básicas -->
+                            <GroupBox Header="Configurações Básicas" Margin="0,0,0,10">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                                        <TextBlock Text="Diretório Base:" Width="120" Style="{StaticResource InfoLabel}"/>
+                                        <TextBox Text="{Binding ImagesBaseDirectory}" Width="200" VerticalAlignment="Center"/>
+                                        <Button Content="..." Width="30" Height="25" Margin="5,0,0,0"
+                                                Command="{Binding BrowseDirectoryCommand}"/>
+                                    </StackPanel>
+                                    
+                                    <CheckBox Content="Descoberta Automática" IsChecked="{Binding EnableAutoDiscovery}" Margin="0,5"/>
+                                    <CheckBox Content="Cache de Templates" IsChecked="{Binding EnableTemplateCache}" Margin="0,5"/>
+                                    <CheckBox Content="Validação de Templates" IsChecked="{Binding EnableTemplateValidation}" Margin="0,5"/>
+                                    <CheckBox Content="Logs Detalhados" IsChecked="{Binding EnableDetailedLogging}" Margin="0,5"/>
+                                    <CheckBox Content="Debug Visual" IsChecked="{Binding EnableVisualDebug}" Margin="0,5"/>
+                                </StackPanel>
+                            </GroupBox>
+                            
+                            <!-- Configurações de Validação -->
+                            <GroupBox Header="Validação de Templates" Margin="0,0,0,10">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                                        <TextBlock Text="Tamanho Mínimo:" Width="120" Style="{StaticResource InfoLabel}"/>
+                                        <Slider Value="{Binding MinTemplateSize}" Minimum="8" Maximum="64" 
+                                                Width="100" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding MinTemplateSize, StringFormat={}{0}px}" 
+                                                   Width="40" Style="{StaticResource ValueLabel}" Margin="5,0,0,0"/>
+                                    </StackPanel>
+                                    
+                                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                                        <TextBlock Text="Tamanho Máximo:" Width="120" Style="{StaticResource InfoLabel}"/>
+                                        <Slider Value="{Binding MaxTemplateSize}" Minimum="32" Maximum="256" 
+                                                Width="100" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding MaxTemplateSize, StringFormat={}{0}px}" 
+                                                   Width="40" Style="{StaticResource ValueLabel}" Margin="5,0,0,0"/>
+                                    </StackPanel>
+                                    
+                                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                                        <TextBlock Text="Timeout (ms):" Width="120" Style="{StaticResource InfoLabel}"/>
+                                        <Slider Value="{Binding TemplateLoadTimeoutMs}" Minimum="1000" Maximum="10000" 
+                                                Width="100" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding TemplateLoadTimeoutMs, StringFormat={}{0}ms}" 
+                                                   Width="40" Style="{StaticResource ValueLabel}" Margin="5,0,0,0"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </GroupBox>
+                            
+                            <!-- Configurações de Debug -->
+                            <GroupBox Header="Configurações de Debug" Margin="0,0,0,10">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                                        <TextBlock Text="Diretório Debug:" Width="120" Style="{StaticResource InfoLabel}"/>
+                                        <TextBox Text="{Binding DebugImageDirectory}" Width="200" VerticalAlignment="Center"/>
+                                        <Button Content="..." Width="30" Height="25" Margin="5,0,0,0"
+                                                Command="{Binding BrowseDebugDirectoryCommand}"/>
+                                    </StackPanel>
+                                    
+                                    <CheckBox Content="Salvar Imagens de Debug" IsChecked="{Binding SaveDebugImages}" Margin="0,5"/>
+                                    <CheckBox Content="Mostrar Janelas de Debug" IsChecked="{Binding ShowDebugWindows}" Margin="0,5"/>
+                                    <CheckBox Content="Log de Performance" IsChecked="{Binding EnablePerformanceLogging}" Margin="0,5"/>
+                                </StackPanel>
+                            </GroupBox>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+                
+                <!-- Status dos Templates -->
+                <Border Grid.Row="2" Background="{StaticResource SolidColorBrush.Background.2}" 
+                        CornerRadius="5" Margin="0,2,0,0" Padding="10">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                            <fa5:ImageAwesome Icon="Solid_List" Foreground="{StaticResource SolidColorBrush.Text.1}" 
+                                              Width="20" Height="20" Margin="0,0,5,0"/>
+                            <TextBlock Text="Status dos Templates" Style="{StaticResource HeaderText}"/>
+                            <Button Content="Atualizar" Width="80" Height="25" Margin="10,0,0,0"
+                                    Command="{Binding RefreshTemplatesCommand}" HorizontalAlignment="Right"/>
+                        </StackPanel>
+                        
+                        <DataGrid ItemsSource="{Binding TemplateStatuses}" 
+                                  AutoGenerateColumns="False" 
+                                  CanUserAddRows="False" 
+                                  CanUserDeleteRows="False"
+                                  IsReadOnly="True"
+                                  GridLinesVisibility="Horizontal"
+                                  HeadersVisibility="Column"
+                                  Background="Transparent"
+                                  BorderThickness="0">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Template" Binding="{Binding Name}" Width="150"/>
+                                <DataGridTextColumn Header="Caminho" Binding="{Binding Path}" Width="*"/>
+                                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="80"/>
+                                <DataGridTextColumn Header="Tamanho" Binding="{Binding Size, StringFormat={}{0}x{1}}" Width="80"/>
+                                <DataGridTextColumn Header="Última Modificação" Binding="{Binding LastModified, StringFormat={}{0:dd/MM/yyyy HH:mm}}" Width="120"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </Border>
+            </Grid>
+            
+            <!-- Painel Lateral - Detectores e Testes -->
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <GridSplitter Grid.Row="1" ResizeDirection="Rows" ResizeBehavior="PreviousAndNext" 
+                              HorizontalAlignment="Stretch" Background="{StaticResource SolidColorBrush.Accent.Blue.4}"/>
+                
+                <!-- Configuração de Detectores -->
+                <Border Grid.Row="0" Background="{StaticResource SolidColorBrush.Background.2}" 
+                        CornerRadius="5" Margin="0,0,0,2" Padding="10">
+                    <ScrollViewer>
+                        <StackPanel>
+                            <TextBlock Text="Configuração de Detectores" Style="{StaticResource HeaderText}"/>
+                            
+                            <!-- Seleção de Detector -->
+                            <GroupBox Header="Detector Ativo" Margin="0,0,0,10">
+                                <StackPanel>
+                                    <ComboBox ItemsSource="{Binding AvailableDetectors}" 
+                                              SelectedItem="{Binding SelectedDetector}"
+                                              DisplayMemberPath="Name"
+                                              Width="200" Margin="0,5"/>
+                                    
+                                    <TextBlock Text="{Binding SelectedDetector.Description}" 
+                                               TextWrapping="Wrap" Margin="0,5" Style="{StaticResource ValueLabel}"/>
+                                </StackPanel>
+                            </GroupBox>
+                            
+                            <!-- Configurações do Detector -->
+                            <GroupBox Header="Configurações do Detector" Margin="0,0,0,10">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                                        <TextBlock Text="Template:" Width="80" Style="{StaticResource InfoLabel}"/>
+                                        <ComboBox ItemsSource="{Binding AvailableTemplates}" 
+                                                  SelectedItem="{Binding SelectedTemplate}"
+                                                  DisplayMemberPath="Name"
+                                                  Width="120"/>
+                                    </StackPanel>
+                                    
+                                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                                        <TextBlock Text="Confiança:" Width="80" Style="{StaticResource InfoLabel}"/>
+                                        <Slider Value="{Binding ConfidenceThreshold}" Minimum="0" Maximum="1" 
+                                                Width="100" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding ConfidenceThreshold, StringFormat={}{0:F2}}" 
+                                                   Width="40" Style="{StaticResource ValueLabel}" Margin="5,0,0,0"/>
+                                    </StackPanel>
+                                    
+                                    <CheckBox Content="Janela de Debug" IsChecked="{Binding EnableDebugWindow}" Margin="0,5"/>
+                                    <CheckBox Content="Filtros de Cor" IsChecked="{Binding EnableColorFiltering}" Margin="0,5"/>
+                                    <CheckBox Content="Análise HSV" IsChecked="{Binding EnableHsvAnalysis}" Margin="0,5"/>
+                                    <CheckBox Content="Multi-Escala" IsChecked="{Binding EnableMultiScale}" Margin="0,5"/>
+                                    <CheckBox Content="Análise de Sinais" IsChecked="{Binding EnableSignalAnalysis}" Margin="0,5"/>
+                                </StackPanel>
+                            </GroupBox>
+                            
+                            <!-- Teste de Detecção -->
+                            <GroupBox Header="Teste de Detecção" Margin="0,0,0,10">
+                                <StackPanel>
+                                    <Button Content="Capturar Área de Teste" Width="150" Height="30" Margin="0,5"
+                                            Command="{Binding CaptureTestAreaCommand}"
+                                            Background="{StaticResource SolidColorBrush.Accent.Blue.4}"/>
+                                    
+                                    <Button Content="Executar Teste" Width="150" Height="30" Margin="0,5"
+                                            Command="{Binding ExecuteTestCommand}"
+                                            Background="{StaticResource SolidColorBrush.Accent.Green.4}"/>
+                                    
+                                    <TextBlock Text="Resultado do Teste:" Style="{StaticResource SectionText}"/>
+                                    <TextBlock Text="{Binding TestResult}" 
+                                               TextWrapping="Wrap" Style="{StaticResource ValueLabel}"/>
+                                </StackPanel>
+                            </GroupBox>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+                
+                <!-- Log de Testes e Estatísticas -->
+                <Border Grid.Row="2" Background="{StaticResource SolidColorBrush.Background.2}" 
+                        CornerRadius="5" Margin="0,2,0,0" Padding="10">
+                    <StackPanel>
+                        <TextBlock Text="Log de Testes" Style="{StaticResource HeaderText}"/>
+                        
+                        <DataGrid ItemsSource="{Binding TestLog}" 
+                                  AutoGenerateColumns="False" 
+                                  CanUserAddRows="False" 
+                                  CanUserDeleteRows="False"
+                                  IsReadOnly="True"
+                                  GridLinesVisibility="Horizontal"
+                                  HeadersVisibility="Column"
+                                  Background="Transparent"
+                                  BorderThickness="0"
+                                  MaxHeight="200">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Hora" Binding="{Binding Timestamp, StringFormat={}{0:HH:mm:ss}}" Width="60"/>
+                                <DataGridTextColumn Header="Tipo" Binding="{Binding Type}" Width="80"/>
+                                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="60"/>
+                                <DataGridTextColumn Header="Detalhes" Binding="{Binding Details}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        
+                        <Button Content="Limpar Log" Width="80" Height="25" Margin="0,5,0,0"
+                                Command="{Binding ClearTestLogCommand}" HorizontalAlignment="Right"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

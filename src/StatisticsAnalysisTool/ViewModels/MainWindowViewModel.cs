@@ -121,6 +121,7 @@ public class MainWindowViewModel : BaseViewModel
     private Visibility _mapHistoryTabVisibility = Visibility.Visible;
     private Visibility _playerInformationTabVisibility = Visibility.Visible;
     private Visibility _guildTabVisibility = Visibility.Visible;
+    private Visibility _botTabVisibility = Visibility.Visible;
     private Visibility _toolTaskFrontViewVisibility = Visibility.Collapsed;
     private Visibility _statsDropDownVisibility = Visibility.Collapsed;
     private double _toolTaskProgressBarValue;
@@ -1322,6 +1323,16 @@ public class MainWindowViewModel : BaseViewModel
         set
         {
             _playerInformationTabVisibility = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public Visibility BotTabVisibility
+    {
+        get => _botTabVisibility;
+        set
+        {
+            _botTabVisibility = value;
             OnPropertyChanged();
         }
     }

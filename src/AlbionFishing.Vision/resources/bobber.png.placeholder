@@ -1,0 +1,13 @@
+PLACEHOLDER PARA bobber.png
+
+Este arquivo deve ser substituído por uma imagem real do bobber de pesca do Albion Online.
+
+Instruções:
+1. Capture uma screenshot do bobber no jogo
+2. Recorte apenas o bobber (sem fundo se possível)
+3. Redimensione para 32x32 ou 64x64 pixels
+4. Salve como PNG com o nome "bobber.png" neste diretório
+
+O VisionDetector procurará por "resources/bobber.png" para realizar o template matching.
+
+Sem este arquivo, o sistema usará o método de fallback (análise de brilho médio). 
