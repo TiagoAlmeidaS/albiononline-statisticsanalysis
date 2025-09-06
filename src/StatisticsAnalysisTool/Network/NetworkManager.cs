@@ -86,6 +86,8 @@ public class NetworkManager
 
         // Request
         builder.AddRequestHandler(new InventoryMoveItemRequestHandler(trackingController));
+        // builder.AddRequestHandler(new MoveRequestHandler(trackingController));
+        // builder.AddRequestHandler(new AttackStartRequestHandler(trackingController));
         builder.AddRequestHandler(new UseShrineRequestHandler(trackingController));
         builder.AddRequestHandler(new ClaimPaymentTransactionRequestHandler(trackingController));
         builder.AddRequestHandler(new ActionOnBuildingStartRequestHandler(trackingController));

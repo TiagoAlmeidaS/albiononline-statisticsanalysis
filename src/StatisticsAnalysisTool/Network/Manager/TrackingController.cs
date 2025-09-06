@@ -18,6 +18,7 @@ using StatisticsAnalysisTool.Trade;
 using StatisticsAnalysisTool.Trade.Mails;
 using StatisticsAnalysisTool.Trade.Market;
 using StatisticsAnalysisTool.ViewModels;
+using StatisticsAnalysisTool.Network.Operations;
 using StatisticsAnalysisTool.Views;
 using System;
 using System.Collections.Generic;
@@ -495,6 +496,254 @@ public class TrackingController : ITrackingController
             Application.Current.Dispatcher.Invoke(() => _mainWindowViewModel?.LoggingBindings?.TopLooters?.Clear());
             LootController?.ClearLootLogger();
         }
+    }
+
+    #endregion
+
+    #region Movement Analysis
+
+    private readonly List<MoveOperation> _movementHistory = new();
+    private const int MaxMovementHistory = 1000;
+
+    public void AnalyzeMovement(MoveOperation moveOperation)
+    {
+        if (!IsTrackingAllowedByMainCharacter())
+        {
+            return;
+        }
+
+        // Adicionar à história de movimento
+        _movementHistory.Add(moveOperation);
+
+        // Manter apenas os últimos movimentos para evitar uso excessivo de memória
+        if (_movementHistory.Count > MaxMovementHistory)
+        {
+            _movementHistory.RemoveAt(0);
+        }
+
+        // Analisar padrões de movimento
+        AnalyzeMovementPatterns(moveOperation);
+
+        // Log para debug (opcional)
+        Log.Debug("Movement detected - Time: {Time}, Position: [{X}, {Y}], NewPosition: [{NewX}, {NewY}], Speed: {Speed}, Direction: {Direction}",
+            moveOperation.Time,
+            moveOperation.Position[0], moveOperation.Position[1],
+            moveOperation.NewPosition[0], moveOperation.NewPosition[1],
+            moveOperation.Speed,
+            moveOperation.Direction);
+    }
+
+    private void AnalyzeMovementPatterns(MoveOperation moveOperation)
+    {
+        // Calcular distância percorrida
+        var distance = CalculateDistance(moveOperation.Position, moveOperation.NewPosition);
+        
+        // Calcular velocidade real (se necessário)
+        var realSpeed = CalculateRealSpeed(moveOperation, distance);
+        
+        // Detectar padrões suspeitos (opcional)
+        DetectSuspiciousMovement(moveOperation, distance, realSpeed);
+    }
+
+    private static double CalculateDistance(float[] position1, float[] position2)
+    {
+        if (position1.Length < 2 || position2.Length < 2)
+            return 0;
+
+        var dx = position2[0] - position1[0];
+        var dy = position2[1] - position1[1];
+        return Math.Sqrt(dx * dx + dy * dy);
+    }
+
+    private static double CalculateRealSpeed(MoveOperation moveOperation, double distance)
+    {
+        // Calcular velocidade baseada na distância e tempo
+        // Assumindo que o tempo está em milissegundos
+        var timeInSeconds = moveOperation.Time / 1000.0;
+        return timeInSeconds > 0 ? distance / timeInSeconds : 0;
+    }
+
+    private void DetectSuspiciousMovement(MoveOperation moveOperation, double distance, double realSpeed)
+    {
+        // Detectar movimentos muito rápidos ou distâncias muito grandes
+        const double maxReasonableSpeed = 50.0; // Ajustar conforme necessário
+        const double maxReasonableDistance = 100.0; // Ajustar conforme necessário
+
+        if (realSpeed > maxReasonableSpeed || distance > maxReasonableDistance)
+        {
+            Log.Warning("Suspicious movement detected - Speed: {Speed}, Distance: {Distance}", realSpeed, distance);
+        }
+    }
+
+    public List<MoveOperation> GetMovementHistory()
+    {
+        return new List<MoveOperation>(_movementHistory);
+    }
+
+    public void ClearMovementHistory()
+    {
+        _movementHistory.Clear();
+    }
+
+    #endregion
+
+    #region Attack Analysis
+
+    private readonly List<AttackStartOperation> _attackHistory = new();
+    private const int MaxAttackHistory = 500;
+
+    public void AnalyzeAttackStart(AttackStartOperation attackOperation)
+    {
+        if (!IsTrackingAllowedByMainCharacter())
+        {
+            return;
+        }
+
+        // Adicionar à história de ataques
+        _attackHistory.Add(attackOperation);
+
+        // Manter apenas os últimos ataques para evitar uso excessivo de memória
+        if (_attackHistory.Count > MaxAttackHistory)
+        {
+            _attackHistory.RemoveAt(0);
+        }
+
+        // Analisar padrões de ataque
+        AnalyzeAttackPatterns(attackOperation);
+
+        // Log para debug (opcional)
+        Log.Debug("Attack started - TargetId: {TargetId}, AttackType: {AttackType}, WeaponType: {WeaponType}",
+            attackOperation.TargetId,
+            attackOperation.AttackType,
+            attackOperation.WeaponType);
+    }
+
+    private void AnalyzeAttackPatterns(AttackStartOperation attackOperation)
+    {
+        // Analisar frequência de ataques
+        AnalyzeAttackFrequency();
+        
+        // Analisar tipos de arma utilizados
+        AnalyzeWeaponUsage(attackOperation.WeaponType);
+        
+        // Detectar padrões suspeitos
+        DetectSuspiciousAttackPatterns(attackOperation);
+    }
+
+    private void AnalyzeAttackFrequency()
+    {
+        // Calcular ataques por minuto (últimos 5 minutos)
+        var recentAttacks = _attackHistory.Where(a => 
+            DateTime.UtcNow.Subtract(TimeSpan.FromMinutes(5)).Ticks < DateTime.UtcNow.Ticks).Count();
+        
+        var attacksPerMinute = recentAttacks / 5.0;
+        
+        if (attacksPerMinute > 10) // Mais de 10 ataques por minuto
+        {
+            Log.Warning("High attack frequency detected: {AttacksPerMinute} attacks/minute", attacksPerMinute);
+        }
+    }
+
+    private void AnalyzeWeaponUsage(int weaponType)
+    {
+        // Analisar distribuição de tipos de arma
+        var weaponUsage = _attackHistory.GroupBy(a => a.WeaponType)
+            .ToDictionary(g => g.Key, g => g.Count());
+        
+        // Log estatísticas de uso de armas
+        Log.Debug("Weapon usage stats: {WeaponStats}", 
+            string.Join(", ", weaponUsage.Select(kvp => $"Type {kvp.Key}: {kvp.Value}")));
+    }
+
+    private void DetectSuspiciousAttackPatterns(AttackStartOperation attackOperation)
+    {
+        // Detectar ataques muito rápidos consecutivos
+        var recentAttacks = _attackHistory.TakeLast(10).ToList();
+        if (recentAttacks.Count >= 3)
+        {
+            // Verificar se há ataques muito próximos no tempo
+            // (Esta é uma implementação simplificada)
+            Log.Debug("Recent attack pattern: {RecentCount} attacks in last 10", recentAttacks.Count);
+        }
+    }
+
+    public List<AttackStartOperation> GetAttackHistory()
+    {
+        return new List<AttackStartOperation>(_attackHistory);
+    }
+
+    public void ClearAttackHistory()
+    {
+        _attackHistory.Clear();
+    }
+
+    #endregion
+
+    #region Mob Position Analysis
+
+    private readonly Dictionary<long, float[]> _mobPositions = new();
+    private readonly Dictionary<long, float[]> _mobNewPositions = new();
+
+    public void AnalyzeMobPosition(long? objectId, float[] position, float[] newPosition)
+    {
+        if (!IsTrackingAllowedByMainCharacter() || objectId == null)
+        {
+            return;
+        }
+
+        var mobId = (long)objectId;
+
+        // Armazenar posições do mob
+        _mobPositions[mobId] = position;
+        _mobNewPositions[mobId] = newPosition;
+
+        // Analisar movimento do mob
+        AnalyzeMobMovement(mobId, position, newPosition);
+
+        // Log para debug
+        Log.Debug("Mob position - ID: {MobId}, Position: [{X}, {Y}], NewPosition: [{NewX}, {NewY}]",
+            mobId,
+            position[0], position[1],
+            newPosition[0], newPosition[1]);
+    }
+
+    private void AnalyzeMobMovement(long mobId, float[] position, float[] newPosition)
+    {
+        // Calcular distância percorrida pelo mob
+        var distance = CalculateMobDistance(position, newPosition);
+        
+        // Detectar mobs que se moveram muito (possível teleporte ou erro)
+        if (distance > 50.0f) // Mais de 50 unidades
+        {
+            Log.Warning("Mob {MobId} moved unusually far: {Distance} units", mobId, distance);
+        }
+
+        // Analisar padrões de movimento de mobs
+        if (distance > 0.1f) // Mob se moveu
+        {
+            Log.Debug("Mob {MobId} moved {Distance} units", mobId, distance);
+        }
+    }
+
+    private static float CalculateMobDistance(float[] position1, float[] position2)
+    {
+        if (position1.Length < 2 || position2.Length < 2)
+            return 0;
+
+        var dx = position2[0] - position1[0];
+        var dy = position2[1] - position1[1];
+        return (float)Math.Sqrt(dx * dx + dy * dy);
+    }
+
+    public Dictionary<long, float[]> GetMobPositions()
+    {
+        return new Dictionary<long, float[]>(_mobPositions);
+    }
+
+    public void ClearMobPositions()
+    {
+        _mobPositions.Clear();
+        _mobNewPositions.Clear();
     }
 
     #endregion

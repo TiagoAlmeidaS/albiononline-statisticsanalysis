@@ -12,7 +12,7 @@ public class NewMobEvent
     public NewMobEvent(Dictionary<byte, object> parameters)
     {
         EventValidator.IsEventValid(EventCodes.NewMob, parameters);
-        
+
         try
         {
             if (parameters.TryGetValue(0, out object objectId))
@@ -54,6 +54,24 @@ public class NewMobEvent
             {
                 EnergyRegeneration = energyRegeneration.ObjectToDouble();
             }
+
+            // Capturar posição atual (chave 7) - array de float[2]
+            if (parameters.TryGetValue(7, out object position) && position is float[] positionArray && positionArray.Length >= 2)
+            {
+                Position = new float[] { positionArray[0], positionArray[1] };
+            }
+
+            // Capturar nova posição (chave 8) - array de float[2]  
+            if (parameters.TryGetValue(8, out object newPosition) && newPosition is float[] newPositionArray && newPositionArray.Length >= 2)
+            {
+                NewPosition = new float[] { newPositionArray[0], newPositionArray[1] };
+            }
+
+            // Capturar dados adicionais se existirem
+            if (parameters.TryGetValue(9, out object additionalData))
+            {
+                AdditionalData = additionalData.ObjectToInt();
+            }
         }
         catch (Exception e)
         {
@@ -62,6 +80,9 @@ public class NewMobEvent
     }
 
     public long? ObjectId { get; }
+    public float[] Position { get; private set; } = Array.Empty<float>();
+    public float[] NewPosition { get; private set; } = Array.Empty<float>();
+    public int AdditionalData { get; }
     public int MobIndex { get; }
     public double MoveSpeed { get; }
     public double HitPoints { get; }
