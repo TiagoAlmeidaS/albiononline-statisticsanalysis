@@ -1,0 +1,153 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="StatisticsAnalysisTool.macOS.Controls.PartyControl">
+
+    <UserControl.Styles>
+        <Style Selector="Border">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+        
+        <Style Selector="TextBlock">
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        
+        <Style Selector="Button">
+            <Setter Property="Background" Value="#FF6B35"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#FF6B35"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+        
+        <Style Selector="Button:pointerover">
+            <Setter Property="Background" Value="#FF7A4A"/>
+        </Style>
+        
+        <Style Selector="ListBox">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+        </Style>
+        
+        <Style Selector="ListBoxItem">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="Padding" Value="8,4"/>
+        </Style>
+        
+        <Style Selector="ListBoxItem:selected">
+            <Setter Property="Background" Value="#FF6B35"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+        </Style>
+        
+        <Style Selector="ListBoxItem:pointerover">
+            <Setter Property="Background" Value="#3D3D3D"/>
+        </Style>
+    </UserControl.Styles>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#2D2D2D" BorderBrush="#4A4A4A" BorderThickness="1" 
+                CornerRadius="3,3,0,0" Padding="15,10">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="👥 Party Management" FontSize="16" FontWeight="Bold" 
+                           Foreground="#E0E0E0" VerticalAlignment="Center"/>
+                <TextBlock Text=" | " FontSize="16" Foreground="#666" Margin="10,0" VerticalAlignment="Center"/>
+                <TextBlock Text="Members: " FontSize="14" Foreground="#B0B0B0" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding PartyMemberCount}" FontSize="14" Foreground="#4CAF50" 
+                           VerticalAlignment="Center" Margin="5,0,0,0"/>
+            </StackPanel>
+        </Border>
+        
+        <!-- Party Members List -->
+        <Border Grid.Row="1" Background="#2D2D2D" BorderBrush="#4A4A4A" BorderThickness="1,0,1,1" 
+                Margin="0,0,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <!-- Search and Filter -->
+                <Border Grid.Row="0" Background="#3D3D3D" Padding="10,8" BorderBrush="#4A4A4A" 
+                        BorderThickness="0,0,0,1">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Watermark="Search party members..." Width="200" Height="30" 
+                                 Background="#2D2D2D" Foreground="#E0E0E0" BorderBrush="#4A4A4A"
+                                 Margin="0,0,10,0"/>
+                        <Button Content="🔍 Search" Click="SearchButton_Click" Margin="0,0,10,0"/>
+                        <Button Content="🔄 Refresh" Click="RefreshButton_Click"/>
+                    </StackPanel>
+                </Border>
+                
+                <!-- Members List -->
+                <ListBox Grid.Row="1" ItemsSource="{Binding PartyMembers}" 
+                         SelectedItem="{Binding SelectedPartyMember}"
+                         Margin="5">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="#3D3D3D" BorderBrush="#4A4A4A" BorderThickness="1" 
+                                    CornerRadius="3" Padding="10,8" Margin="2">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <!-- Player Icon -->
+                                    <Border Grid.Column="0" Width="40" Height="40" Background="#FF6B35" 
+                                            CornerRadius="20" Margin="0,0,10,0">
+                                        <TextBlock Text="👤" FontSize="20" HorizontalAlignment="Center" 
+                                                   VerticalAlignment="Center"/>
+                                    </Border>
+                                    
+                                    <!-- Player Info -->
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding PlayerName}" FontSize="14" FontWeight="Bold" 
+                                                   Foreground="#E0E0E0"/>
+                                        <TextBlock Text="{Binding GuildName}" FontSize="12" 
+                                                   Foreground="#B0B0B0"/>
+                                        <TextBlock Text="{Binding CurrentMap}" FontSize="11" 
+                                                   Foreground="#888"/>
+                                    </StackPanel>
+                                    
+                                    <!-- Status Indicator -->
+                                    <Ellipse Grid.Column="2" Width="12" Height="12" 
+                                             Fill="{Binding StatusColor}" Margin="5,0,0,0"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </Border>
+        
+        <!-- Action Buttons -->
+        <Border Grid.Row="2" Background="#2D2D2D" BorderBrush="#4A4A4A" BorderThickness="1,0,1,1" 
+                CornerRadius="0,0,3,3" Padding="15,10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="📋 Copy Party Info" Click="CopyPartyInfo_Click" Margin="0,0,10,0"/>
+                <Button Content="➕ Add Member" Click="AddMember_Click" Margin="0,0,10,0"/>
+                <Button Content="❌ Remove Selected" Click="RemoveSelected_Click" 
+                        IsEnabled="{Binding HasSelectedMember}"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

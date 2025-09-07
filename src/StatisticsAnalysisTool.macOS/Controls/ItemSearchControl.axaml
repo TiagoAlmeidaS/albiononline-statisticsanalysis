@@ -1,0 +1,353 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="StatisticsAnalysisTool.macOS.Controls.ItemSearchControl">
+
+    <UserControl.Styles>
+        <!-- Albion Online Item Search Styles -->
+        <Style Selector="Border.search-panel">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <Style Selector="TextBlock.search-title">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#FF6B35"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <Style Selector="TextBox.search-box">
+            <Setter Property="Background" Value="#1E1E1E"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="SelectionForeground" Value="#FFFFFF"/>
+            <Setter Property="SelectionBackground" Value="#FF6B35"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <Style Selector="Button.search-button">
+            <Setter Property="Background" Value="#FF6B35"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FF6B35"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+
+        <Style Selector="Button.search-button:pointerover">
+            <Setter Property="Background" Value="#FF7A4A"/>
+        </Style>
+
+        <Style Selector="Button.search-button:pressed">
+            <Setter Property="Background" Value="#E55A2B"/>
+        </Style>
+
+        <Style Selector="ListBox.item-list">
+            <Setter Property="Background" Value="#1E1E1E"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+        </Style>
+
+        <Style Selector="ListBoxItem.item-entry">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+
+        <Style Selector="ListBoxItem.item-entry:selected">
+            <Setter Property="Background" Value="#FF6B35"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+        </Style>
+
+        <Style Selector="ListBoxItem.item-entry:pointerover">
+            <Setter Property="Background" Value="#3D3D3D"/>
+        </Style>
+
+        <Style Selector="Border.item-card">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="3"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+
+        <Style Selector="TextBlock.item-name">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+        </Style>
+
+        <Style Selector="TextBlock.item-tier">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#FF6B35"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style Selector="TextBlock.item-price">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#4CAF50"/>
+        </Style>
+    </UserControl.Styles>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Search Header -->
+        <Border Grid.Row="0" Classes="search-panel">
+            <StackPanel>
+                <TextBlock Text="🔍 Item Search" Classes="search-title"/>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Grid.Column="0" Name="SearchTextBox" Classes="search-box" 
+                             Watermark="Search for items..." TextChanged="SearchText_TextChanged"/>
+                    
+                    <Button Grid.Column="1" Content="🔍 Search" Classes="search-button" 
+                            Click="SearchButton_Click" Margin="10,0,5,0"/>
+                    
+                    <Button Grid.Column="2" Content="🔄 Reset" Classes="search-button" 
+                            Click="ResetButton_Click"/>
+                </Grid>
+
+                <!-- Filter Options -->
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                    <ComboBox Name="TierFilter" Width="100" Margin="0,0,10,0" 
+                              SelectedIndex="0">
+                        <ComboBoxItem Content="All Tiers"/>
+                        <ComboBoxItem Content="T1"/>
+                        <ComboBoxItem Content="T2"/>
+                        <ComboBoxItem Content="T3"/>
+                        <ComboBoxItem Content="T4"/>
+                        <ComboBoxItem Content="T5"/>
+                        <ComboBoxItem Content="T6"/>
+                        <ComboBoxItem Content="T7"/>
+                        <ComboBoxItem Content="T8"/>
+                    </ComboBox>
+
+                    <ComboBox Name="CategoryFilter" Width="150" Margin="0,0,10,0"
+                              SelectedIndex="0">
+                        <ComboBoxItem Content="All Categories"/>
+                        <ComboBoxItem Content="Weapons"/>
+                        <ComboBoxItem Content="Armor"/>
+                        <ComboBoxItem Content="Accessories"/>
+                        <ComboBoxItem Content="Consumables"/>
+                        <ComboBoxItem Content="Resources"/>
+                    </ComboBox>
+
+                    <ComboBox Name="QualityFilter" Width="120" Margin="0,0,10,0"
+                              SelectedIndex="0">
+                        <ComboBoxItem Content="All Qualities"/>
+                        <ComboBoxItem Content="Normal"/>
+                        <ComboBoxItem Content="Good"/>
+                        <ComboBoxItem Content="Outstanding"/>
+                        <ComboBoxItem Content="Excellent"/>
+                        <ComboBoxItem Content="Masterpiece"/>
+                    </ComboBox>
+
+                    <CheckBox Name="AlertModeCheckBox" Content="🔔 Alert Mode" 
+                              Foreground="#E0E0E0" VerticalAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Search Results -->
+        <Border Grid.Row="1" Classes="search-panel">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="300"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Item List -->
+                <ListBox Grid.Column="0" Name="ItemListBox" Classes="item-list" 
+                         SelectionChanged="ItemListBox_SelectionChanged">
+                    <ListBoxItem Classes="item-entry">
+                        <Border Classes="item-card">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Item Icon -->
+                                <Border Grid.Column="0" Width="40" Height="40" 
+                                        Background="#FF6B35" CornerRadius="3" Margin="0,0,10,0">
+                                    <TextBlock Text="⚔️" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+
+                                <!-- Item Info -->
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="Sword" Classes="item-name"/>
+                                    <TextBlock Text="T4.2" Classes="item-tier"/>
+                                    <TextBlock Text="One-handed Sword" FontSize="10" Foreground="#B0B0B0"/>
+                                </StackPanel>
+
+                                <!-- Price Info -->
+                                <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                                    <TextBlock Text="1,250" Classes="item-price"/>
+                                    <TextBlock Text="Silver" FontSize="10" Foreground="#B0B0B0"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </ListBoxItem>
+
+                    <ListBoxItem Classes="item-entry">
+                        <Border Classes="item-card">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Item Icon -->
+                                <Border Grid.Column="0" Width="40" Height="40" 
+                                        Background="#4CAF50" CornerRadius="3" Margin="0,0,10,0">
+                                    <TextBlock Text="🛡️" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+
+                                <!-- Item Info -->
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="Shield" Classes="item-name"/>
+                                    <TextBlock Text="T3.1" Classes="item-tier"/>
+                                    <TextBlock Text="Shield" FontSize="10" Foreground="#B0B0B0"/>
+                                </StackPanel>
+
+                                <!-- Price Info -->
+                                <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                                    <TextBlock Text="850" Classes="item-price"/>
+                                    <TextBlock Text="Silver" FontSize="10" Foreground="#B0B0B0"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </ListBoxItem>
+
+                    <ListBoxItem Classes="item-entry">
+                        <Border Classes="item-card">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Item Icon -->
+                                <Border Grid.Column="0" Width="40" Height="40" 
+                                        Background="#2196F3" CornerRadius="3" Margin="0,0,10,0">
+                                    <TextBlock Text="🧙" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+
+                                <!-- Item Info -->
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="Robe" Classes="item-name"/>
+                                    <TextBlock Text="T5.3" Classes="item-tier"/>
+                                    <TextBlock Text="Cloth Armor" FontSize="10" Foreground="#B0B0B0"/>
+                                </StackPanel>
+
+                                <!-- Price Info -->
+                                <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                                    <TextBlock Text="2,100" Classes="item-price"/>
+                                    <TextBlock Text="Silver" FontSize="10" Foreground="#B0B0B0"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </ListBoxItem>
+                </ListBox>
+
+                <!-- Item Details Panel -->
+                <Border Grid.Column="1" Classes="search-panel" Margin="10,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="Item Details" Classes="search-title"/>
+                        
+                        <Border Classes="item-card">
+                            <StackPanel>
+                                <!-- Item Icon -->
+                                <Border Width="60" Height="60" Background="#FF6B35" CornerRadius="5" 
+                                        HorizontalAlignment="Center" Margin="0,0,0,10">
+                                    <TextBlock Text="⚔️" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+
+                                <!-- Item Name -->
+                                <TextBlock Text="Sword" Classes="item-name" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+                                <TextBlock Text="T4.2" Classes="item-tier" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+                                <!-- Price Information -->
+                                <StackPanel Margin="0,0,0,10">
+                                    <TextBlock Text="Price Information" FontSize="12" FontWeight="Bold" 
+                                               Foreground="#B0B0B0" Margin="0,0,0,5"/>
+                                    
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="Buy Price" FontSize="10" Foreground="#B0B0B0"/>
+                                            <TextBlock Text="1,250" Classes="item-price"/>
+                                        </StackPanel>
+                                        
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Text="Sell Price" FontSize="10" Foreground="#B0B0B0"/>
+                                            <TextBlock Text="1,100" Classes="item-price"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+
+                                <!-- Location Information -->
+                                <StackPanel Margin="0,0,0,10">
+                                    <TextBlock Text="Best Location" FontSize="12" FontWeight="Bold" 
+                                               Foreground="#B0B0B0" Margin="0,0,0,5"/>
+                                    <TextBlock Text="Lymhurst" FontSize="12" Foreground="#E0E0E0"/>
+                                </StackPanel>
+
+                                <!-- Action Buttons -->
+                                <StackPanel>
+                                    <Button Content="📊 View Details" Classes="search-button" 
+                                            Click="ViewDetails_Click" Margin="0,0,0,5"/>
+                                    <Button Content="🔔 Set Alert" Classes="search-button" 
+                                            Click="SetAlert_Click" Margin="0,0,0,5"/>
+                                    <Button Content="📈 Price History" Classes="search-button" 
+                                            Click="PriceHistory_Click"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- Status Bar -->
+        <Border Grid.Row="2" Background="#1E1E1E" BorderBrush="#4A4A4A" BorderThickness="0,1,0,0" Height="30">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0">
+                <TextBlock Text="Items found: " FontSize="12" Foreground="#B0B0B0"/>
+                <TextBlock Text="3" FontSize="12" Foreground="#E0E0E0" Name="ItemCountText"/>
+                <TextBlock Text=" | " FontSize="12" Foreground="#666" Margin="10,0"/>
+                <TextBlock Text="Last updated: " FontSize="12" Foreground="#B0B0B0"/>
+                <TextBlock Text="2 minutes ago" FontSize="12" Foreground="#E0E0E0" Name="LastUpdatedText"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

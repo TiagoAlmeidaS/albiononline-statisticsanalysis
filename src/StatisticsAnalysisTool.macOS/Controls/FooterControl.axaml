@@ -1,0 +1,59 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="40"
+             x:Class="StatisticsAnalysisTool.macOS.Controls.FooterControl">
+
+    <UserControl.Styles>
+        <Style Selector="Border">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="BorderThickness" Value="0,1,0,0"/>
+        </Style>
+        
+        <Style Selector="TextBlock">
+            <Setter Property="Foreground" Value="#B0B0B0"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        
+        <Style Selector="HyperlinkButton">
+            <Setter Property="Foreground" Value="#FF6B35"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+        </Style>
+        
+        <Style Selector="HyperlinkButton:pointerover">
+            <Setter Property="Foreground" Value="#FF7A4A"/>
+            <Setter Property="TextDecorations" Value="Underline"/>
+        </Style>
+    </UserControl.Styles>
+
+    <Border Background="#2D2D2D" BorderBrush="#4A4A4A" BorderThickness="0,1,0,0" Height="40">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- Left side - Version and Status -->
+            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,0,0">
+                <TextBlock Text="Status: " FontSize="12" Foreground="#B0B0B0"/>
+                <TextBlock Text="Ready" FontSize="12" Foreground="#4CAF50"/>
+                <TextBlock Text=" | " FontSize="12" Foreground="#666" Margin="10,0"/>
+                <TextBlock Text="Version: 1.0.0" FontSize="12" Foreground="#B0B0B0"/>
+            </StackPanel>
+            
+            <!-- Right side - Links -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,20,0">
+                <HyperlinkButton Content="GitHub" Click="GitHubLink_Click" Margin="0,0,15,0"/>
+                <HyperlinkButton Content="Discord" Click="DiscordLink_Click" Margin="0,0,15,0"/>
+                <HyperlinkButton Content="Donate" Click="DonateLink_Click"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>

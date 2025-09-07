@@ -1,0 +1,278 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:userControls="using:StatisticsAnalysisTool.macOS.Controls"
+        xmlns:viewModels="using:StatisticsAnalysisTool.Core.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="650"
+        x:Class="StatisticsAnalysisTool.macOS.Views.MainWindow"
+        Title="AlbionOnline - StatisticsAnalysisTool"
+        Width="1000" Height="650"
+        MinWidth="800" MinHeight="600"
+        WindowStartupLocation="CenterScreen"
+        Background="#1E1E1E"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="NoChrome">
+
+    <Window.Styles>
+        <!-- Albion Online Dark Theme Styles -->
+        <Style Selector="Window">
+            <Setter Property="Background" Value="#1E1E1E"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="FontFamily" Value="Segoe UI, Arial, sans-serif"/>
+        </Style>
+
+        <!-- TabControl Style - Albion Online Style -->
+        <Style Selector="TabControl">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="0"/>
+        </Style>
+
+        <Style Selector="TabItem">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="Foreground" Value="#B0B0B0"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Margin" Value="2,0,0,0"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <Style Selector="TabItem:selected">
+            <Setter Property="Background" Value="#FF6B35"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+        </Style>
+
+        <Style Selector="TabItem:pointerover">
+            <Setter Property="Background" Value="#3D3D3D"/>
+        </Style>
+
+        <!-- Button Styles - Albion Online Style -->
+        <Style Selector="Button">
+            <Setter Property="Background" Value="#FF6B35"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#FF6B35"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+
+        <Style Selector="Button:pointerover">
+            <Setter Property="Background" Value="#FF7A4A"/>
+        </Style>
+
+        <Style Selector="Button:pressed">
+            <Setter Property="Background" Value="#E55A2B"/>
+        </Style>
+
+        <!-- TextBlock Styles -->
+        <Style Selector="TextBlock">
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+        </Style>
+
+        <!-- Panel Styles -->
+        <Style Selector="Panel">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+
+        <!-- Grid Styles -->
+        <Style Selector="Grid">
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+
+        <!-- Border Styles -->
+        <Style Selector="Border">
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="Background" Value="#2D2D2D"/>
+        </Style>
+
+        <!-- ScrollViewer Styles -->
+        <Style Selector="ScrollViewer">
+            <Setter Property="Background" Value="#1E1E1E"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+        </Style>
+
+        <!-- ListBox Styles -->
+        <Style Selector="ListBox">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+        </Style>
+
+        <Style Selector="ListBoxItem">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="Padding" Value="8,4"/>
+        </Style>
+
+        <Style Selector="ListBoxItem:selected">
+            <Setter Property="Background" Value="#FF6B35"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+        </Style>
+
+        <Style Selector="ListBoxItem:pointerover">
+            <Setter Property="Background" Value="#3D3D3D"/>
+        </Style>
+
+        <!-- TextBox Styles -->
+        <Style Selector="TextBox">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="SelectionForeground" Value="#FFFFFF"/>
+            <Setter Property="SelectionBackground" Value="#FF6B35"/>
+        </Style>
+
+        <!-- ComboBox Styles -->
+        <Style Selector="ComboBox">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+        </Style>
+
+        <!-- ProgressBar Styles -->
+        <Style Selector="ProgressBar">
+            <Setter Property="Background" Value="#1E1E1E"/>
+            <Setter Property="Foreground" Value="#FF6B35"/>
+        </Style>
+    </Window.Styles>
+
+    <Grid>
+        <!-- Header Bar with Albion Online Style -->
+        <Border Grid.Row="0" Height="60" Background="#2D2D2D" BorderBrush="#4A4A4A" BorderThickness="0,0,0,1">
+            <Grid>
+                <!-- Title and Status -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,0,0">
+                    <!-- Albion Online Logo/Icon Area -->
+                    <Border Width="40" Height="40" Background="#FF6B35" CornerRadius="20" Margin="0,0,15,0">
+                        <TextBlock Text="AO" FontSize="18" FontWeight="Bold" Foreground="White" 
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="AlbionOnline - Statistics Analysis Tool" 
+                                   FontSize="18" FontWeight="Bold" Foreground="#E0E0E0"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                            <Ellipse Width="8" Height="8" Fill="#4CAF50" Margin="0,0,5,0"/>
+                            <TextBlock Text="Connected" FontSize="12" Foreground="#B0B0B0"/>
+                            <TextBlock Text=" | " FontSize="12" Foreground="#666" Margin="5,0"/>
+                            <TextBlock Text="Server: Live" FontSize="12" Foreground="#B0B0B0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Window Controls -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,20,0">
+                    <Button Content="−" Width="30" Height="30" FontSize="16" Click="MinimizeButton_Click" 
+                            Background="#3D3D3D" BorderBrush="#4A4A4A"/>
+                    <Button x:Name="MaximizeButton" Content="□" Width="30" Height="30" FontSize="16" 
+                            Click="MaximizeButton_Click" Background="#3D3D3D" BorderBrush="#4A4A4A" Margin="5,0,0,0"/>
+                    <Button Content="×" Width="30" Height="30" FontSize="16" Click="CloseButton_Click" 
+                            Background="#E74C3C" BorderBrush="#C0392B" Margin="5,0,0,0"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Main Content Area -->
+        <Grid Grid.Row="1" Margin="0">
+            <!-- Tab Control with Albion Online Style -->
+            <TabControl Name="MainTabControl" Background="#2D2D2D">
+                <!-- Dashboard Tab -->
+                <TabItem Header="📊 Dashboard">
+                    <userControls:DashboardControl/>
+                </TabItem>
+
+                <!-- Item Search Tab -->
+                <TabItem Header="🔍 Item Search">
+                    <userControls:SimpleItemSearchControl/>
+                </TabItem>
+
+                <!-- Logging Tab -->
+                <TabItem Header="📝 Logging">
+                    <userControls:SimpleLoggingControl/>
+                </TabItem>
+
+                <!-- Guild Tab -->
+                <TabItem Header="🏰 Guild">
+                    <userControls:SimpleGuildControl/>
+                </TabItem>
+
+                <!-- Dungeons Tab -->
+                <TabItem Header="🏰 Dungeons">
+                    <userControls:SimpleDungeonControl/>
+                </TabItem>
+
+                <!-- Damage Meter Tab -->
+                <TabItem Header="⚔️ Damage Meter">
+                    <userControls:SimpleDamageMeterControl/>
+                </TabItem>
+
+                <!-- Trade Monitoring Tab -->
+                <TabItem Header="💰 Trade Monitoring">
+                    <userControls:SimpleTradeMonitoringControl/>
+                </TabItem>
+
+                <!-- Gathering Tab -->
+                <TabItem Header="⛏️ Gathering">
+                    <userControls:SimpleGatheringControl/>
+                </TabItem>
+
+                <!-- Party Tab -->
+                <TabItem Header="👥 Party">
+                    <userControls:PartyControl/>
+                </TabItem>
+
+                <!-- Storage History Tab -->
+                <TabItem Header="📦 Storage History">
+                    <userControls:SimpleStorageHistoryControl/>
+                </TabItem>
+
+                <!-- Map History Tab -->
+                <TabItem Header="🗺️ Map History">
+                    <userControls:SimpleMapHistoryControl/>
+                </TabItem>
+
+                <!-- Player Information Tab -->
+                <TabItem Header="👤 Player Info">
+                    <userControls:PlayerInformationControl/>
+                </TabItem>
+
+                <!-- Bot Tab -->
+                <TabItem Header="🤖 Bot">
+                    <userControls:BotControl/>
+                </TabItem>
+
+                <!-- Fishing Tab -->
+                <TabItem Header="🎣 Fishing">
+                    <userControls:FishingControl/>
+                </TabItem>
+
+                <!-- Crafting Tab -->
+                <TabItem Header="⚒️ Crafting">
+                    <userControls:SimpleCraftingControl/>
+                </TabItem>
+
+                <!-- Settings Tab -->
+                <TabItem Header="⚙️ Settings">
+                    <userControls:SettingsControl/>
+                </TabItem>
+            </TabControl>
+        </Grid>
+
+        <!-- Footer with Status Information -->
+        <userControls:FooterControl Grid.Row="2" Height="40"/>
+        
+        <!-- Error and Information Bars -->
+        <StackPanel Grid.Row="3" Orientation="Vertical" VerticalAlignment="Bottom">
+            <userControls:ErrorBarControl VerticalAlignment="Bottom" Visibility="{Binding ErrorBarVisibility, FallbackValue=Collapsed}" 
+                                          ErrorText="{Binding ErrorBarText}"/>
+            <userControls:WarningBarControl VerticalAlignment="Bottom" Visibility="{Binding WarningBarVisibility, FallbackValue=Collapsed}" 
+                                            WarningText="{Binding WarningBarText}"/>
+            <userControls:InformationBarControl VerticalAlignment="Bottom" Visibility="{Binding InformationBarVisibility, FallbackValue=Collapsed}" 
+                                                InformationText="{Binding InformationBarText}"/>
+        </StackPanel>
+    </Grid>
+</Window>

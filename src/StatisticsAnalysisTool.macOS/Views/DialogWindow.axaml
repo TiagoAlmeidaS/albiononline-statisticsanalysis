@@ -1,0 +1,97 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="200"
+        x:Class="StatisticsAnalysisTool.macOS.Views.DialogWindow"
+        Title="{Binding Title, FallbackValue=Dialog}"
+        Height="200" Width="500" MinHeight="150" MinWidth="400"
+        WindowStartupLocation="CenterScreen"
+        Background="#1E1E1E"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="NoChrome">
+
+    <Window.Styles>
+        <!-- Albion Online Dark Theme Styles -->
+        <Style Selector="Window">
+            <Setter Property="Background" Value="#1E1E1E"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="FontFamily" Value="Segoe UI, Arial, sans-serif"/>
+        </Style>
+
+        <Style Selector="Button">
+            <Setter Property="Background" Value="#FF6B35"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#FF6B35"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+
+        <Style Selector="Button:pointerover">
+            <Setter Property="Background" Value="#FF7A4A"/>
+        </Style>
+
+        <Style Selector="Button:pressed">
+            <Setter Property="Background" Value="#E55A2B"/>
+        </Style>
+
+        <Style Selector="TextBlock">
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+        </Style>
+
+        <Style Selector="Border">
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="Background" Value="#2D2D2D"/>
+        </Style>
+    </Window.Styles>
+
+    <Grid>
+        <!-- Header Bar -->
+        <Border Grid.Row="0" Height="40" Background="#2D2D2D" BorderBrush="#4A4A4A" BorderThickness="0,0,0,1">
+            <Grid>
+                <!-- Title and Icon -->
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,0,0">
+                    <Border Width="24" Height="24" Background="#FF6B35" CornerRadius="12" Margin="0,0,10,0">
+                        <TextBlock Text="⚠️" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <TextBlock Text="{Binding Title, FallbackValue=Dialog}" FontSize="16" FontWeight="Bold" 
+                               Foreground="#E0E0E0" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- Close Button -->
+                <Button Content="×" Width="30" Height="30" FontSize="16" Click="CloseButton_Click" 
+                        Background="#E74C3C" BorderBrush="#C0392B" HorizontalAlignment="Right" 
+                        VerticalAlignment="Center" Margin="0,0,20,0"/>
+            </Grid>
+        </Border>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="1" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Message -->
+            <TextBlock Grid.Row="0" Text="{Binding Message, FallbackValue=Message}" FontSize="16" 
+                       TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                       TextWrapping="Wrap" Foreground="#E0E0E0" Margin="0,0,0,20"/>
+
+            <!-- Buttons -->
+            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="{Binding YesButtonText, FallbackValue=Yes}" FontSize="14" FontWeight="Bold" 
+                        Height="36" Width="120" Click="YesButton_Click" Margin="0,0,10,0"
+                        Visibility="{Binding ShowYesNoButtons, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                <Button Content="{Binding NoButtonText, FallbackValue=No}" FontSize="14" FontWeight="Bold" 
+                        Height="36" Width="120" Click="NoButton_Click" Margin="10,0,0,0"
+                        Visibility="{Binding ShowYesNoButtons, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                <Button Content="{Binding OkButtonText, FallbackValue=OK}" FontSize="14" FontWeight="Bold" 
+                        Height="36" Width="120" Click="OkButton_Click"
+                        Visibility="{Binding ShowOkButton, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

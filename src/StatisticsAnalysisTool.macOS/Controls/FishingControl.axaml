@@ -1,0 +1,355 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="700"
+             x:Class="StatisticsAnalysisTool.macOS.Controls.FishingControl">
+
+    <UserControl.Styles>
+        <!-- Albion Online Fishing Styles -->
+        <Style Selector="Border.fishing-panel">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <Style Selector="Border.stat-box">
+            <Setter Property="Background" Value="#1E1E1E"/>
+            <Setter Property="BorderBrush" Value="#FF6B35"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="3"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+
+        <Style Selector="TextBlock.fishing-title">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#FF6B35"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <Style Selector="TextBlock.stat-label">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#B0B0B0"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style Selector="TextBlock.stat-number">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style Selector="Button.fishing-button">
+            <Setter Property="Background" Value="#FF6B35"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FF6B35"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+
+        <Style Selector="Button.fishing-button:pointerover">
+            <Setter Property="Background" Value="#FF7A4A"/>
+        </Style>
+
+        <Style Selector="Button.fishing-button:pressed">
+            <Setter Property="Background" Value="#E55A2B"/>
+        </Style>
+
+        <Style Selector="Button.stop-button">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Setter Property="BorderBrush" Value="#C0392B"/>
+        </Style>
+
+        <Style Selector="Button.stop-button:pointerover">
+            <Setter Property="Background" Value="#EC7063"/>
+        </Style>
+
+        <Style Selector="Button.start-button">
+            <Setter Property="Background" Value="#27AE60"/>
+            <Setter Property="BorderBrush" Value="#229954"/>
+        </Style>
+
+        <Style Selector="Button.start-button:pointerover">
+            <Setter Property="Background" Value="#2ECC71"/>
+        </Style>
+
+        <Style Selector="Border.status-indicator">
+            <Setter Property="Width" Value="12"/>
+            <Setter Property="Height" Value="12"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Margin" Value="5,0,0,0"/>
+        </Style>
+
+        <Style Selector="ProgressBar.fishing-progress">
+            <Setter Property="Background" Value="#1E1E1E"/>
+            <Setter Property="Foreground" Value="#FF6B35"/>
+            <Setter Property="Height" Value="8"/>
+        </Style>
+    </UserControl.Styles>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="250"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Left Panel - Statistics and Controls -->
+        <Border Grid.Column="0" Classes="fishing-panel">
+            <StackPanel>
+                <!-- Live Statistics -->
+                <TextBlock Text="⚡ LIVE STATISTICS" Classes="fishing-title"/>
+                
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Fish Caught -->
+                    <Border Grid.Row="0" Grid.Column="0" Classes="stat-box" Background="#4CAF50">
+                        <StackPanel>
+                            <TextBlock Text="FISH" Classes="stat-label"/>
+                            <TextBlock Text="0" Classes="stat-number" Name="FishCaughtText"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Trash -->
+                    <Border Grid.Row="0" Grid.Column="1" Classes="stat-box" Background="#FF9800">
+                        <StackPanel>
+                            <TextBlock Text="TRASH" Classes="stat-label"/>
+                            <TextBlock Text="0" Classes="stat-number" Name="TrashText"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Bait Status -->
+                    <Border Grid.Row="1" Grid.Column="0" Classes="stat-box" Background="#2196F3">
+                        <StackPanel>
+                            <TextBlock Text="BAIT" Classes="stat-label"/>
+                            <TextBlock Text="YES" Classes="stat-number" Name="BaitStatusText"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Food Status -->
+                    <Border Grid.Row="1" Grid.Column="1" Classes="stat-box" Background="#E91E63">
+                        <StackPanel>
+                            <TextBlock Text="FOOD" Classes="stat-label"/>
+                            <TextBlock Text="YES" Classes="stat-number" Name="FoodStatusText"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Failures -->
+                    <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Classes="stat-box" Background="#F44336">
+                        <StackPanel>
+                            <TextBlock Text="FAILURES" Classes="stat-label"/>
+                            <TextBlock Text="0" Classes="stat-number" Name="FailuresText"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <!-- Bot Status -->
+                <Border Classes="fishing-panel" Margin="0,10,0,0">
+                    <StackPanel>
+                        <TextBlock Text="BOT STATUS" Classes="fishing-title"/>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                            <TextBlock Text="FISHING..." FontSize="14" FontWeight="Bold" Foreground="#FF6B35"/>
+                            <Border Background="#4CAF50" Classes="status-indicator" Name="StatusIndicator"/>
+                        </StackPanel>
+                        
+                        <TextBlock Text="Waiting for action..." FontSize="12" Foreground="#B0B0B0" Margin="0,0,0,10"/>
+                        
+                        <!-- Player Info -->
+                        <StackPanel>
+                            <TextBlock Text="Player Info" FontSize="12" FontWeight="Bold" Foreground="#E0E0E0" Margin="0,0,0,5"/>
+                            
+                            <StackPanel Margin="0,0,0,5">
+                                <TextBlock Text="Health:" FontSize="10" Foreground="#B0B0B0"/>
+                                <ProgressBar Value="100" Maximum="100" Classes="fishing-progress" Name="HealthProgressBar"/>
+                            </StackPanel>
+                            
+                            <StackPanel Margin="0,0,0,5">
+                                <TextBlock Text="Energy:" FontSize="10" Foreground="#B0B0B0"/>
+                                <ProgressBar Value="100" Maximum="100" Classes="fishing-progress" Name="EnergyProgressBar"/>
+                            </StackPanel>
+                            
+                            <StackPanel>
+                                <TextBlock Text="Silver:" FontSize="10" Foreground="#B0B0B0"/>
+                                <TextBlock Text="0" FontSize="10" Foreground="#E0E0E0" Name="SilverText"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Controls -->
+                <Border Classes="fishing-panel" Margin="0,10,0,0">
+                    <StackPanel>
+                        <Button Content="■ Stop Bot [F5]" Classes="fishing-button stop-button" 
+                                Click="StopBot_Click" Margin="0,0,0,5"/>
+                        <Button Content="▶ Start Bot [F6]" Classes="fishing-button start-button" 
+                                Click="StartBot_Click" Margin="0,0,0,5"/>
+                        <Button Content="⚙ Settings" Classes="fishing-button" 
+                                Click="OpenSettings_Click"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Border>
+
+        <!-- Center Panel - Fishing Area and Map -->
+        <Border Grid.Column="1" Classes="fishing-panel" Margin="5,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="200"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Minimap -->
+                <Border Grid.Row="0" Background="#1E1E1E" BorderBrush="#4A4A4A" BorderThickness="1" CornerRadius="3" Margin="0,0,0,5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Map Header -->
+                        <Border Grid.Row="0" Background="#2D2D2D" Padding="8,4">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Position: " FontSize="12" Foreground="#B0B0B0"/>
+                                <TextBlock Text="Unknown" FontSize="12" Foreground="#E0E0E0" Name="PositionText"/>
+                                <TextBlock Text=" | Waypoints: " FontSize="12" Foreground="#B0B0B0" Margin="10,0,0,0"/>
+                                <TextBlock Text="0" FontSize="12" Foreground="#E0E0E0" Name="WaypointCountText"/>
+                                <TextBlock Text=" | Stations: " FontSize="12" Foreground="#B0B0B0" Margin="10,0,0,0"/>
+                                <TextBlock Text="0" FontSize="12" Foreground="#E0E0E0" Name="StationCountText"/>
+                                
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Content="+" Width="20" Height="20" FontSize="10" Margin="2,0" Click="ZoomIn_Click"/>
+                                    <Button Content="Reset" Width="40" Height="20" FontSize="8" Margin="2,0" Click="ResetZoom_Click"/>
+                                    <Button Content="-" Width="20" Height="20" FontSize="10" Margin="2,0" Click="ZoomOut_Click"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Map Area -->
+                        <Border Grid.Row="1" Background="#1E1E1E" Margin="2">
+                            <Canvas Name="MinimapCanvas" Background="#1E1E1E">
+                                <!-- Map content would be drawn here -->
+                                <Ellipse Width="12" Height="12" Fill="#4CAF50" Canvas.Left="100" Canvas.Top="100"/>
+                                <TextBlock Text="G" FontSize="8" FontWeight="Bold" Foreground="White" 
+                                           Canvas.Left="104" Canvas.Top="104"/>
+                            </Canvas>
+                        </Border>
+                    </Grid>
+                </Border>
+                
+                <!-- Fishing Area -->
+                <Border Grid.Row="1" Background="#1E1E1E" BorderBrush="#4A4A4A" BorderThickness="1" CornerRadius="3">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Fishing Header -->
+                        <Border Grid.Row="0" Background="#2D2D2D" Padding="8,4">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="🎣" FontSize="16" Margin="0,0,5,0"/>
+                                <TextBlock Text="Fishing Area" FontWeight="Bold" FontSize="14" Foreground="#E0E0E0"/>
+                                <TextBlock Text=" | " FontSize="14" Foreground="#666" Margin="5,0"/>
+                                <TextBlock Text="Bobber Detection: " FontSize="12" Foreground="#B0B0B0"/>
+                                <Border Background="#4CAF50" Classes="status-indicator" Name="BobberIndicator"/>
+                                <TextBlock Text="Active" FontSize="12" Foreground="#E0E0E0" Margin="5,0,0,0" Name="BobberStatusText"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Fishing Visualization -->
+                        <Border Grid.Row="1" Background="#1E1E1E" Margin="5">
+                            <Grid>
+                                <!-- Screen capture area -->
+                                <Border Background="#0F0F0F" BorderBrush="#4A4A4A" BorderThickness="1" CornerRadius="3">
+                                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <TextBlock Text="🎣" FontSize="48" Foreground="#666" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="Fishing Area" FontSize="16" Foreground="#666" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="Screen capture will appear here" FontSize="12" Foreground="#444" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Overlay controls -->
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5">
+                                    <Button Content="📷 Capture" Width="80" Height="25" FontSize="10" 
+                                            Classes="fishing-button" Click="CaptureScreen_Click" Margin="2"/>
+                                    <Button Content="🎯 Test Detection" Width="100" Height="25" FontSize="10" 
+                                            Classes="fishing-button" Click="TestDetection_Click" Margin="2"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- Right Panel - Activity Log and Status -->
+        <Border Grid.Column="2" Classes="fishing-panel">
+            <StackPanel>
+                <!-- Activity Log -->
+                <Border Classes="fishing-panel" Margin="0,0,0,10">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                            <TextBlock Text="📋" FontSize="16" Margin="0,0,5,0"/>
+                            <TextBlock Text="Activity Log" FontWeight="Bold" FontSize="14" Foreground="#E0E0E0"/>
+                            <Button Content="Clear" Width="40" Height="20" FontSize="8" 
+                                    Classes="fishing-button" HorizontalAlignment="Right" Click="ClearLog_Click"/>
+                        </StackPanel>
+                        
+                        <ScrollViewer Height="300" VerticalScrollBarVisibility="Auto">
+                            <ListBox Background="Transparent" BorderThickness="0" Name="ActivityLogListBox">
+                                <ListBoxItem>
+                                    <StackPanel Orientation="Horizontal" Margin="4">
+                                        <TextBlock Text="14:30:25" FontSize="10" Foreground="#666" Width="50"/>
+                                        <TextBlock Text="Bot started successfully" FontSize="10" Foreground="#E0E0E0" Margin="5,0,0,0"/>
+                                    </StackPanel>
+                                </ListBoxItem>
+                                <ListBoxItem>
+                                    <StackPanel Orientation="Horizontal" Margin="4">
+                                        <TextBlock Text="14:30:30" FontSize="10" Foreground="#666" Width="50"/>
+                                        <TextBlock Text="Looking for fishing spot..." FontSize="10" Foreground="#E0E0E0" Margin="5,0,0,0"/>
+                                    </StackPanel>
+                                </ListBoxItem>
+                                <ListBoxItem>
+                                    <StackPanel Orientation="Horizontal" Margin="4">
+                                        <TextBlock Text="14:30:45" FontSize="10" Foreground="#666" Width="50"/>
+                                        <TextBlock Text="Bobber detected!" FontSize="10" Foreground="#4CAF50" Margin="5,0,0,0"/>
+            </StackPanel>
+                                </ListBoxItem>
+                            </ListBox>
+        </ScrollViewer>
+                    </StackPanel>
+                </Border>
+        
+                <!-- Connection Status -->
+                <Border Classes="fishing-panel">
+                    <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                            <Border Background="#4CAF50" Classes="status-indicator" Name="ConnectionIndicator"/>
+                            <TextBlock Text="Connected" FontSize="12" Foreground="#E0E0E0" Name="ConnectionStatusText"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

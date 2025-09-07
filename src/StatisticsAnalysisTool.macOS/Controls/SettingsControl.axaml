@@ -1,0 +1,282 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="StatisticsAnalysisTool.macOS.Controls.SettingsControl">
+
+    <UserControl.Styles>
+        <!-- Albion Online Settings Styles -->
+        <Style Selector="Border.settings-panel">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <Style Selector="TextBlock.settings-title">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#FF6B35"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <Style Selector="TextBlock.settings-label">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#B0B0B0"/>
+            <Setter Property="Margin" Value="0,0,0,5"/>
+        </Style>
+
+        <Style Selector="TextBox.settings-input">
+            <Setter Property="Background" Value="#1E1E1E"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="SelectionForeground" Value="#FFFFFF"/>
+            <Setter Property="SelectionBackground" Value="#FF6B35"/>
+            <Setter Property="Padding" Value="8,6"/>
+        </Style>
+
+        <Style Selector="ComboBox.settings-combo">
+            <Setter Property="Background" Value="#1E1E1E"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+        </Style>
+
+        <Style Selector="CheckBox.settings-check">
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+        </Style>
+
+        <Style Selector="Button.settings-button">
+            <Setter Property="Background" Value="#FF6B35"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FF6B35"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+
+        <Style Selector="Button.settings-button:pointerover">
+            <Setter Property="Background" Value="#FF7A4A"/>
+        </Style>
+
+        <Style Selector="Button.settings-button:pressed">
+            <Setter Property="Background" Value="#E55A2B"/>
+        </Style>
+
+        <Style Selector="Button.save-button">
+            <Setter Property="Background" Value="#27AE60"/>
+            <Setter Property="BorderBrush" Value="#229954"/>
+        </Style>
+
+        <Style Selector="Button.save-button:pointerover">
+            <Setter Property="Background" Value="#2ECC71"/>
+        </Style>
+    </UserControl.Styles>
+
+    <ScrollViewer>
+        <Grid Margin="20">
+            <!-- General Settings -->
+            <Border Classes="settings-panel">
+                <StackPanel>
+                    <TextBlock Text="⚙️ General Settings" Classes="settings-title"/>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                            <TextBlock Text="Language:" Classes="settings-label"/>
+                            <ComboBox Name="LanguageComboBox" Classes="settings-combo" SelectedIndex="0">
+                                <ComboBoxItem Content="English"/>
+                                <ComboBoxItem Content="Português"/>
+                                <ComboBoxItem Content="Español"/>
+                                <ComboBoxItem Content="Français"/>
+                                <ComboBoxItem Content="Deutsch"/>
+                            </ComboBox>
+
+                            <TextBlock Text="Theme:" Classes="settings-label" Margin="0,15,0,5"/>
+                            <ComboBox Name="ThemeComboBox" Classes="settings-combo" SelectedIndex="0">
+                                <ComboBoxItem Content="Dark (Albion Online)"/>
+                                <ComboBoxItem Content="Light"/>
+                                <ComboBoxItem Content="High Contrast"/>
+                            </ComboBox>
+
+                            <TextBlock Text="Auto-Update:" Classes="settings-label" Margin="0,15,0,5"/>
+                            <CheckBox Name="AutoUpdateCheckBox" Content="Check for updates automatically" 
+                                      Classes="settings-check" IsChecked="True"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                            <TextBlock Text="Startup:" Classes="settings-label"/>
+                            <CheckBox Name="StartMinimizedCheckBox" Content="Start minimized" 
+                                      Classes="settings-check" Margin="0,0,0,10"/>
+                            <CheckBox Name="StartWithWindowsCheckBox" Content="Start with Windows" 
+                                      Classes="settings-check" Margin="0,0,0,10"/>
+                            <CheckBox Name="ShowSplashScreenCheckBox" Content="Show splash screen" 
+                                      Classes="settings-check" IsChecked="True"/>
+
+                            <TextBlock Text="Notifications:" Classes="settings-label" Margin="0,15,0,5"/>
+                            <CheckBox Name="EnableNotificationsCheckBox" Content="Enable notifications" 
+                                      Classes="settings-check" IsChecked="True" Margin="0,0,0,5"/>
+                            <CheckBox Name="SoundNotificationsCheckBox" Content="Sound notifications" 
+                                      Classes="settings-check" IsChecked="True"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Tracking Settings -->
+            <Border Classes="settings-panel" Margin="0,10,0,0">
+                <StackPanel>
+                    <TextBlock Text="📊 Tracking Settings" Classes="settings-title"/>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                            <TextBlock Text="Data Collection:" Classes="settings-label"/>
+                            <CheckBox Name="TrackFameCheckBox" Content="Track Fame" 
+                                      Classes="settings-check" IsChecked="True" Margin="0,0,0,5"/>
+                            <CheckBox Name="TrackSilverCheckBox" Content="Track Silver" 
+                                      Classes="settings-check" IsChecked="True" Margin="0,0,0,5"/>
+                            <CheckBox Name="TrackItemsCheckBox" Content="Track Items" 
+                                      Classes="settings-check" IsChecked="True" Margin="0,0,0,5"/>
+                            <CheckBox Name="TrackPvPCheckBox" Content="Track PvP" 
+                                      Classes="settings-check" IsChecked="True" Margin="0,0,0,5"/>
+                            <CheckBox Name="TrackGatheringCheckBox" Content="Track Gathering" 
+                                      Classes="settings-check" IsChecked="True"/>
+
+                            <TextBlock Text="Data Retention:" Classes="settings-label" Margin="0,15,0,5"/>
+                            <ComboBox Name="DataRetentionComboBox" Classes="settings-combo" SelectedIndex="2">
+                                <ComboBoxItem Content="1 Day"/>
+                                <ComboBoxItem Content="1 Week"/>
+                                <ComboBoxItem Content="1 Month"/>
+                                <ComboBoxItem Content="3 Months"/>
+                                <ComboBoxItem Content="Forever"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                            <TextBlock Text="Auto-Save:" Classes="settings-label"/>
+                            <CheckBox Name="AutoSaveCheckBox" Content="Auto-save data" 
+                                      Classes="settings-check" IsChecked="True" Margin="0,0,0,10"/>
+
+                            <TextBlock Text="Save Interval (minutes):" Classes="settings-label"/>
+                            <TextBox Name="SaveIntervalTextBox" Text="5" Classes="settings-input" Width="100" HorizontalAlignment="Left"/>
+
+                            <TextBlock Text="Backup:" Classes="settings-label" Margin="0,15,0,5"/>
+                            <CheckBox Name="AutoBackupCheckBox" Content="Auto-backup data" 
+                                      Classes="settings-check" IsChecked="True" Margin="0,0,0,5"/>
+                            <CheckBox Name="CloudBackupCheckBox" Content="Cloud backup" 
+                                      Classes="settings-check" Margin="0,0,0,10"/>
+
+                            <Button Content="📁 Open Data Folder" Classes="settings-button" 
+                                    Click="OpenDataFolder_Click" HorizontalAlignment="Left"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Bot Settings -->
+            <Border Classes="settings-panel" Margin="0,10,0,0">
+                <StackPanel>
+                    <TextBlock Text="🤖 Bot Settings" Classes="settings-title"/>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                            <TextBlock Text="Safety:" Classes="settings-label"/>
+                            <CheckBox Name="HealthSafetyCheckBox" Content="Stop if health &lt; 50%" 
+                                      Classes="settings-check" IsChecked="True" Margin="0,0,0,5"/>
+                            <CheckBox Name="EnergySafetyCheckBox" Content="Stop if energy &lt; 30%" 
+                                      Classes="settings-check" IsChecked="True" Margin="0,0,0,5"/>
+                            <CheckBox Name="PvPSafetyCheckBox" Content="Avoid PvP zones" 
+                                      Classes="settings-check" IsChecked="True" Margin="0,0,0,5"/>
+                            <CheckBox Name="SilverSafetyCheckBox" Content="Stop if silver &lt; 1000" 
+                                      Classes="settings-check" Margin="0,0,0,10"/>
+
+                            <TextBlock Text="Max Attempts:" Classes="settings-label"/>
+                            <TextBox Name="MaxAttemptsTextBox" Text="10" Classes="settings-input" Width="100" HorizontalAlignment="Left"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                            <TextBlock Text="Performance:" Classes="settings-label"/>
+                            <CheckBox Name="HighPerformanceCheckBox" Content="High performance mode" 
+                                      Classes="settings-check" Margin="0,0,0,10"/>
+
+                            <TextBlock Text="Cooldown (seconds):" Classes="settings-label"/>
+                            <TextBox Name="CooldownTextBox" Text="5" Classes="settings-input" Width="100" HorizontalAlignment="Left" Margin="0,0,0,10"/>
+
+                            <TextBlock Text="Max Failures:" Classes="settings-label"/>
+                            <TextBox Name="MaxFailuresTextBox" Text="3" Classes="settings-input" Width="100" HorizontalAlignment="Left" Margin="0,0,0,10"/>
+
+                            <Button Content="🧪 Test Bot" Classes="settings-button" 
+                                    Click="TestBot_Click" HorizontalAlignment="Left"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Advanced Settings -->
+            <Border Classes="settings-panel" Margin="0,10,0,0">
+                <StackPanel>
+                    <TextBlock Text="🔧 Advanced Settings" Classes="settings-title"/>
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                            <TextBlock Text="Debug:" Classes="settings-label"/>
+                            <CheckBox Name="DebugModeCheckBox" Content="Enable debug mode" 
+                                      Classes="settings-check" Margin="0,0,0,5"/>
+                            <CheckBox Name="VerboseLoggingCheckBox" Content="Verbose logging" 
+                                      Classes="settings-check" Margin="0,0,0,5"/>
+                            <CheckBox Name="NetworkDebugCheckBox" Content="Network debug" 
+                                      Classes="settings-check" Margin="0,0,0,10"/>
+
+                            <TextBlock Text="API Settings:" Classes="settings-label"/>
+                            <TextBox Name="ApiKeyTextBox" Watermark="Enter API key..." Classes="settings-input" Margin="0,0,0,5"/>
+                            <TextBox Name="ApiUrlTextBox" Text="https://api.albion-online-data.com" Classes="settings-input"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                            <TextBlock Text="Performance:" Classes="settings-label"/>
+                            <CheckBox Name="HardwareAccelerationCheckBox" Content="Hardware acceleration" 
+                                      Classes="settings-check" IsChecked="True" Margin="0,0,0,5"/>
+                            <CheckBox Name="MultiThreadingCheckBox" Content="Multi-threading" 
+                                      Classes="settings-check" IsChecked="True" Margin="0,0,0,10"/>
+
+                            <TextBlock Text="Memory Limit (MB):" Classes="settings-label"/>
+                            <TextBox Name="MemoryLimitTextBox" Text="512" Classes="settings-input" Width="100" HorizontalAlignment="Left" Margin="0,0,0,10"/>
+
+                            <Button Content="🔄 Reset to Defaults" Classes="settings-button" 
+                                    Click="ResetToDefaults_Click" HorizontalAlignment="Left"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Action Buttons -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+                <Button Content="🔄 Reset" Classes="settings-button" Click="ResetSettings_Click"/>
+                <Button Content="💾 Save Settings" Classes="settings-button save-button" Click="SaveSettings_Click"/>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

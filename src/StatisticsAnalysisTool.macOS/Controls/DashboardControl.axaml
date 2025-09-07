@@ -1,0 +1,273 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="StatisticsAnalysisTool.macOS.Controls.DashboardControl">
+
+    <UserControl.Styles>
+        <!-- Albion Online Dashboard Styles -->
+        <Style Selector="Border.stat-card">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <Style Selector="TextBlock.stat-title">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#FF6B35"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+        </Style>
+
+        <Style Selector="TextBlock.stat-value">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="Margin" Value="0,0,0,4"/>
+        </Style>
+
+        <Style Selector="TextBlock.stat-subtitle">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#B0B0B0"/>
+        </Style>
+
+        <Style Selector="Border.stat-icon">
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="CornerRadius" Value="20"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+        </Style>
+
+        <Style Selector="Button.dashboard-button">
+            <Setter Property="Background" Value="#FF6B35"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FF6B35"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+
+        <Style Selector="Button.dashboard-button:pointerover">
+            <Setter Property="Background" Value="#FF7A4A"/>
+        </Style>
+
+        <Style Selector="Button.dashboard-button:pressed">
+            <Setter Property="Background" Value="#E55A2B"/>
+        </Style>
+    </UserControl.Styles>
+
+    <ScrollViewer>
+        <Grid Margin="20">
+            <!-- Header Section -->
+            <Border Background="#2D2D2D" BorderBrush="#4A4A4A" BorderThickness="1" CornerRadius="5" Margin="0,0,0,20">
+                <StackPanel Orientation="Horizontal" Margin="20,15">
+                    <!-- Albion Online Style Icon -->
+                    <Border Background="#FF6B35" CornerRadius="20" Width="50" Height="50" Margin="0,0,15,0">
+                        <TextBlock Text="📊" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    
+                    <StackPanel>
+                        <TextBlock Text="Statistics Dashboard" FontSize="20" FontWeight="Bold" Foreground="#E0E0E0"/>
+                        <TextBlock Text="Real-time statistics and tracking information" FontSize="12" Foreground="#B0B0B0"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Main Statistics Grid -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Fame Card -->
+                <Border Grid.Row="0" Grid.Column="0" Classes="stat-card">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Border Background="#4CAF50" Classes="stat-icon">
+                                <TextBlock Text="⭐" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel>
+                                <TextBlock Text="FAME" Classes="stat-title"/>
+                                <TextBlock Text="0" Classes="stat-value"/>
+                                <TextBlock Text="0 /h" Classes="stat-subtitle"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Silver Card -->
+                <Border Grid.Row="0" Grid.Column="1" Classes="stat-card">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Border Background="#FFD700" Classes="stat-icon">
+                                <TextBlock Text="💰" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel>
+                                <TextBlock Text="SILVER" Classes="stat-title"/>
+                                <TextBlock Text="0" Classes="stat-value"/>
+                                <TextBlock Text="0 /h" Classes="stat-subtitle"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- ReSpec Card -->
+                <Border Grid.Row="0" Grid.Column="2" Classes="stat-card">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Border Background="#9C27B0" Classes="stat-icon">
+                                <TextBlock Text="🔄" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel>
+                                <TextBlock Text="RESPEC" Classes="stat-title"/>
+                                <TextBlock Text="0" Classes="stat-value"/>
+                                <TextBlock Text="0 /h" Classes="stat-subtitle"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Might Card -->
+                <Border Grid.Row="0" Grid.Column="3" Classes="stat-card">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Border Background="#FF5722" Classes="stat-icon">
+                                <TextBlock Text="💪" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel>
+                                <TextBlock Text="MIGHT" Classes="stat-title"/>
+                                <TextBlock Text="0" Classes="stat-value"/>
+                                <TextBlock Text="0 /h" Classes="stat-subtitle"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Favor Card -->
+                <Border Grid.Row="1" Grid.Column="0" Classes="stat-card">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Border Background="#2196F3" Classes="stat-icon">
+                                <TextBlock Text="❤️" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel>
+                                <TextBlock Text="FAVOR" Classes="stat-title"/>
+                                <TextBlock Text="0" Classes="stat-value"/>
+                                <TextBlock Text="0 /h" Classes="stat-subtitle"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Session Time Card -->
+                <Border Grid.Row="1" Grid.Column="1" Classes="stat-card">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Border Background="#607D8B" Classes="stat-icon">
+                                <TextBlock Text="⏱️" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel>
+                                <TextBlock Text="SESSION TIME" Classes="stat-title"/>
+                                <TextBlock Text="00:00:00" Classes="stat-value"/>
+                                <TextBlock Text="Active" Classes="stat-subtitle"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Kills/Deaths Card -->
+                <Border Grid.Row="1" Grid.Column="2" Classes="stat-card">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Border Background="#E91E63" Classes="stat-icon">
+                                <TextBlock Text="⚔️" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel>
+                                <TextBlock Text="K/D RATIO" Classes="stat-title"/>
+                                <TextBlock Text="0/0" Classes="stat-value"/>
+                                <TextBlock Text="0.00" Classes="stat-subtitle"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- Loot Value Card -->
+                <Border Grid.Row="1" Grid.Column="3" Classes="stat-card">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Border Background="#795548" Classes="stat-icon">
+                                <TextBlock Text="📦" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel>
+                                <TextBlock Text="LOOT VALUE" Classes="stat-title"/>
+                                <TextBlock Text="0" Classes="stat-value"/>
+                                <TextBlock Text="Silver" Classes="stat-subtitle"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Action Buttons Section -->
+            <Border Background="#2D2D2D" BorderBrush="#4A4A4A" BorderThickness="1" CornerRadius="5" Margin="0,20,0,0">
+                <StackPanel Margin="20,15">
+                    <TextBlock Text="Quick Actions" FontSize="16" FontWeight="Bold" Foreground="#E0E0E0" Margin="0,0,0,10"/>
+                    
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="🔄 Reset Statistics" Classes="dashboard-button" Click="ResetStatistics_Click"/>
+                        <Button Content="📊 Open Detailed View" Classes="dashboard-button" Click="OpenDetailedView_Click"/>
+                        <Button Content="⚙️ Settings" Classes="dashboard-button" Click="OpenSettings_Click"/>
+                        <Button Content="📁 Export Data" Classes="dashboard-button" Click="ExportData_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Recent Activity Section -->
+            <Border Background="#2D2D2D" BorderBrush="#4A4A4A" BorderThickness="1" CornerRadius="5" Margin="0,20,0,0">
+                <StackPanel Margin="20,15">
+                    <TextBlock Text="Recent Activity" FontSize="16" FontWeight="Bold" Foreground="#E0E0E0" Margin="0,0,0,10"/>
+                    
+                    <ListBox Height="150" Background="Transparent" BorderThickness="0">
+                        <ListBoxItem>
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse Width="8" Height="8" Fill="#4CAF50" Margin="0,0,10,0"/>
+                                <TextBlock Text="Session started" Foreground="#B0B0B0" FontSize="12"/>
+                                <TextBlock Text=" - " Foreground="#666" FontSize="12"/>
+                                <TextBlock Text="2 minutes ago" Foreground="#B0B0B0" FontSize="12"/>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse Width="8" Height="8" Fill="#FFD700" Margin="0,0,10,0"/>
+                                <TextBlock Text="Silver gained: 1,250" Foreground="#B0B0B0" FontSize="12"/>
+                                <TextBlock Text=" - " Foreground="#666" FontSize="12"/>
+                                <TextBlock Text="1 minute ago" Foreground="#B0B0B0" FontSize="12"/>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse Width="8" Height="8" Fill="#4CAF50" Margin="0,0,10,0"/>
+                                <TextBlock Text="Fame gained: 500" Foreground="#B0B0B0" FontSize="12"/>
+                                <TextBlock Text=" - " Foreground="#666" FontSize="12"/>
+                                <TextBlock Text="30 seconds ago" Foreground="#B0B0B0" FontSize="12"/>
+                            </StackPanel>
+                        </ListBoxItem>
+                    </ListBox>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

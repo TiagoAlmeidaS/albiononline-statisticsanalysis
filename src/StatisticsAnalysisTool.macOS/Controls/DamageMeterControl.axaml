@@ -1,0 +1,357 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="StatisticsAnalysisTool.macOS.Controls.DamageMeterControl">
+
+    <UserControl.Styles>
+        <!-- Albion Online Damage Meter Styles -->
+        <Style Selector="Border.damage-panel">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <Style Selector="TextBlock.damage-title">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#FF6B35"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <Style Selector="Button.damage-button">
+            <Setter Property="Background" Value="#FF6B35"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FF6B35"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+
+        <Style Selector="Button.damage-button:pointerover">
+            <Setter Property="Background" Value="#FF7A4A"/>
+        </Style>
+
+        <Style Selector="Button.damage-button:pressed">
+            <Setter Property="Background" Value="#E55A2B"/>
+        </Style>
+
+        <Style Selector="Button.reset-button">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Setter Property="BorderBrush" Value="#C0392B"/>
+        </Style>
+
+        <Style Selector="Button.reset-button:pointerover">
+            <Setter Property="Background" Value="#EC7063"/>
+        </Style>
+
+        <Style Selector="ListBox.damage-list">
+            <Setter Property="Background" Value="#1E1E1E"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+        </Style>
+
+        <Style Selector="ListBoxItem.damage-entry">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+
+        <Style Selector="ListBoxItem.damage-entry:selected">
+            <Setter Property="Background" Value="#FF6B35"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+        </Style>
+
+        <Style Selector="ListBoxItem.damage-entry:pointerover">
+            <Setter Property="Background" Value="#3D3D3D"/>
+        </Style>
+
+        <Style Selector="Border.damage-bar">
+            <Setter Property="Background" Value="#1E1E1E"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="2"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Margin" Value="0,2"/>
+        </Style>
+
+        <Style Selector="TextBlock.damage-value">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+        </Style>
+
+        <Style Selector="TextBlock.damage-percentage">
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Foreground" Value="#B0B0B0"/>
+        </Style>
+    </UserControl.Styles>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Damage Meter Header -->
+        <Border Grid.Row="0" Classes="damage-panel">
+            <StackPanel>
+                <TextBlock Text="⚔️ Damage Meter" Classes="damage-title"/>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                            <TextBlock Text="Status: " FontSize="14" Foreground="#B0B0B0"/>
+                            <TextBlock Text="Active" FontSize="14" Foreground="#4CAF50" Name="StatusText"/>
+                        </StackPanel>
+                        
+                        <TextBlock Text="Tracking damage dealt to enemies" FontSize="12" Foreground="#B0B0B0" Name="StatusDescriptionText"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <Button Content="🔄 Reset" Classes="damage-button reset-button" 
+                                Click="ResetDamageMeter_Click"/>
+                        <Button Content="📊 Open Window" Classes="damage-button" 
+                                Click="OpenDamageMeterWindow_Click"/>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <!-- Damage Meter Content -->
+        <Border Grid.Row="1" Classes="damage-panel">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="300"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Damage List -->
+                <ListBox Grid.Column="0" Name="DamageListBox" Classes="damage-list">
+                    <ListBoxItem Classes="damage-entry">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Player Icon -->
+                            <Border Grid.Column="0" Width="30" Height="30" 
+                                    Background="#4CAF50" CornerRadius="15" Margin="0,0,10,0">
+                                <TextBlock Text="👤" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+
+                            <!-- Player Info -->
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="PlayerName" FontSize="14" FontWeight="Bold" Foreground="#E0E0E0"/>
+                                <TextBlock Text="Sword T4.2" FontSize="10" Foreground="#B0B0B0"/>
+                            </StackPanel>
+
+                            <!-- Damage Value -->
+                            <TextBlock Grid.Column="2" Text="15,420" Classes="damage-value" 
+                                       HorizontalAlignment="Right" Margin="0,0,10,0"/>
+
+                            <!-- Damage Percentage -->
+                            <TextBlock Grid.Column="3" Text="45.2%" Classes="damage-percentage" 
+                                       HorizontalAlignment="Right"/>
+
+                            <!-- Damage Bar -->
+                            <Border Grid.Column="0" Grid.ColumnSpan="4" Classes="damage-bar" Margin="40,25,0,0">
+                                <Border Background="#4CAF50" Width="45.2%" Height="100%" CornerRadius="1"/>
+                            </Border>
+                        </Grid>
+                    </ListBoxItem>
+
+                    <ListBoxItem Classes="damage-entry">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Player Icon -->
+                            <Border Grid.Column="0" Width="30" Height="30" 
+                                    Background="#2196F3" CornerRadius="15" Margin="0,0,10,0">
+                                <TextBlock Text="🧙" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+
+                            <!-- Player Info -->
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="MagePlayer" FontSize="14" FontWeight="Bold" Foreground="#E0E0E0"/>
+                                <TextBlock Text="Staff T3.1" FontSize="10" Foreground="#B0B0B0"/>
+                            </StackPanel>
+
+                            <!-- Damage Value -->
+                            <TextBlock Grid.Column="2" Text="8,750" Classes="damage-value" 
+                                       HorizontalAlignment="Right" Margin="0,0,10,0"/>
+
+                            <!-- Damage Percentage -->
+                            <TextBlock Grid.Column="3" Text="25.8%" Classes="damage-percentage" 
+                                       HorizontalAlignment="Right"/>
+
+                            <!-- Damage Bar -->
+                            <Border Grid.Column="0" Grid.ColumnSpan="4" Classes="damage-bar" Margin="40,25,0,0">
+                                <Border Background="#2196F3" Width="25.8%" Height="100%" CornerRadius="1"/>
+                            </Border>
+                        </Grid>
+                    </ListBoxItem>
+
+                    <ListBoxItem Classes="damage-entry">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Player Icon -->
+                            <Border Grid.Column="0" Width="30" Height="30" 
+                                    Background="#FF9800" CornerRadius="15" Margin="0,0,10,0">
+                                <TextBlock Text="🏹" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+
+                            <!-- Player Info -->
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="ArcherPlayer" FontSize="14" FontWeight="Bold" Foreground="#E0E0E0"/>
+                                <TextBlock Text="Bow T5.3" FontSize="10" Foreground="#B0B0B0"/>
+                            </StackPanel>
+
+                            <!-- Damage Value -->
+                            <TextBlock Grid.Column="2" Text="6,230" Classes="damage-value" 
+                                       HorizontalAlignment="Right" Margin="0,0,10,0"/>
+
+                            <!-- Damage Percentage -->
+                            <TextBlock Grid.Column="3" Text="18.4%" Classes="damage-percentage" 
+                                       HorizontalAlignment="Right"/>
+
+                            <!-- Damage Bar -->
+                            <Border Grid.Column="0" Grid.ColumnSpan="4" Classes="damage-bar" Margin="40,25,0,0">
+                                <Border Background="#FF9800" Width="18.4%" Height="100%" CornerRadius="1"/>
+                            </Border>
+                        </Grid>
+                    </ListBoxItem>
+
+                    <ListBoxItem Classes="damage-entry">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Player Icon -->
+                            <Border Grid.Column="0" Width="30" Height="30" 
+                                    Background="#9C27B0" CornerRadius="15" Margin="0,0,10,0">
+                                <TextBlock Text="🔮" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+
+                            <!-- Player Info -->
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="HealerPlayer" FontSize="14" FontWeight="Bold" Foreground="#E0E0E0"/>
+                                <TextBlock Text="Holy T2.4" FontSize="10" Foreground="#B0B0B0"/>
+                            </StackPanel>
+
+                            <!-- Damage Value -->
+                            <TextBlock Grid.Column="2" Text="2,600" Classes="damage-value" 
+                                       HorizontalAlignment="Right" Margin="0,0,10,0"/>
+
+                            <!-- Damage Percentage -->
+                            <TextBlock Grid.Column="3" Text="7.7%" Classes="damage-percentage" 
+                                       HorizontalAlignment="Right"/>
+
+                            <!-- Damage Bar -->
+                            <Border Grid.Column="0" Grid.ColumnSpan="4" Classes="damage-bar" Margin="40,25,0,0">
+                                <Border Background="#9C27B0" Width="7.7%" Height="100%" CornerRadius="1"/>
+                            </Border>
+                        </Grid>
+                    </ListBoxItem>
+                </ListBox>
+
+                <!-- Statistics Panel -->
+                <Border Grid.Column="1" Classes="damage-panel" Margin="10,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="Statistics" Classes="damage-title"/>
+                        
+                        <Border Classes="damage-panel" Margin="0,0,0,10">
+                            <StackPanel>
+                                <TextBlock Text="Total Damage" FontSize="12" FontWeight="Bold" 
+                                           Foreground="#B0B0B0" Margin="0,0,0,5"/>
+                                <TextBlock Text="33,000" FontSize="20" FontWeight="Bold" 
+                                           Foreground="#E0E0E0" Name="TotalDamageText"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Classes="damage-panel" Margin="0,0,0,10">
+                            <StackPanel>
+                                <TextBlock Text="DPS" FontSize="12" FontWeight="Bold" 
+                                           Foreground="#B0B0B0" Margin="0,0,0,5"/>
+                                <TextBlock Text="1,100" FontSize="18" FontWeight="Bold" 
+                                           Foreground="#4CAF50" Name="DpsText"/>
+                                <TextBlock Text="damage per second" FontSize="10" 
+                                           Foreground="#B0B0B0"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Classes="damage-panel" Margin="0,0,0,10">
+                            <StackPanel>
+                                <TextBlock Text="Fight Duration" FontSize="12" FontWeight="Bold" 
+                                           Foreground="#B0B0B0" Margin="0,0,0,5"/>
+                                <TextBlock Text="00:30" FontSize="16" FontWeight="Bold" 
+                                           Foreground="#E0E0E0" Name="FightDurationText"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Classes="damage-panel">
+                            <StackPanel>
+                                <TextBlock Text="Participants" FontSize="12" FontWeight="Bold" 
+                                           Foreground="#B0B0B0" Margin="0,0,0,5"/>
+                                <TextBlock Text="4" FontSize="16" FontWeight="Bold" 
+                                           Foreground="#E0E0E0" Name="ParticipantsText"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Action Buttons -->
+                        <StackPanel Margin="0,20,0,0">
+                            <Button Content="📋 Copy to Clipboard" Classes="damage-button" 
+                                    Click="CopyToClipboard_Click" Margin="0,0,0,5"/>
+                            <Button Content="📸 Take Snapshot" Classes="damage-button" 
+                                    Click="TakeSnapshot_Click" Margin="0,0,0,5"/>
+                            <Button Content="💾 Save Report" Classes="damage-button" 
+                                    Click="SaveReport_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- Status Bar -->
+        <Border Grid.Row="2" Background="#1E1E1E" BorderBrush="#4A4A4A" BorderThickness="0,1,0,0" Height="30">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0">
+                <TextBlock Text="Last update: " FontSize="12" Foreground="#B0B0B0"/>
+                <TextBlock Text="2 seconds ago" FontSize="12" Foreground="#E0E0E0" Name="LastUpdateText"/>
+                <TextBlock Text=" | " FontSize="12" Foreground="#666" Margin="10,0"/>
+                <TextBlock Text="Mode: " FontSize="12" Foreground="#B0B0B0"/>
+                <TextBlock Text="Real-time" FontSize="12" Foreground="#4CAF50" Name="ModeText"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

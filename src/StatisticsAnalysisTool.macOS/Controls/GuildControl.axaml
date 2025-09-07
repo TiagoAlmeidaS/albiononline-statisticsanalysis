@@ -1,0 +1,366 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="StatisticsAnalysisTool.macOS.Controls.GuildControl">
+
+    <UserControl.Styles>
+        <!-- Albion Online Guild Styles -->
+        <Style Selector="Border.guild-panel">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <Style Selector="TextBlock.guild-title">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#FF6B35"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <Style Selector="Button.guild-button">
+            <Setter Property="Background" Value="#FF6B35"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FF6B35"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+
+        <Style Selector="Button.guild-button:pointerover">
+            <Setter Property="Background" Value="#FF7A4A"/>
+        </Style>
+
+        <Style Selector="Button.guild-button:pressed">
+            <Setter Property="Background" Value="#E55A2B"/>
+        </Style>
+
+        <Style Selector="ListBox.guild-list">
+            <Setter Property="Background" Value="#1E1E1E"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+        </Style>
+
+        <Style Selector="ListBoxItem.guild-entry">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+
+        <Style Selector="ListBoxItem.guild-entry:selected">
+            <Setter Property="Background" Value="#FF6B35"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+        </Style>
+
+        <Style Selector="ListBoxItem.guild-entry:pointerover">
+            <Setter Property="Background" Value="#3D3D3D"/>
+        </Style>
+
+        <Style Selector="Border.guild-card">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="3"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+
+        <Style Selector="TextBlock.guild-name">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+        </Style>
+
+        <Style Selector="TextBlock.guild-info">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#B0B0B0"/>
+        </Style>
+
+        <Style Selector="TextBlock.guild-value">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#4CAF50"/>
+        </Style>
+    </UserControl.Styles>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Guild Header -->
+        <Border Grid.Row="0" Classes="guild-panel">
+            <StackPanel>
+                <TextBlock Text="🏰 Guild Information" Classes="guild-title"/>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                            <TextBlock Text="Guild: " FontSize="14" Foreground="#B0B0B0"/>
+                            <TextBlock Text="Dark Knights" FontSize="14" Foreground="#E0E0E0" Name="GuildNameText"/>
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Alliance: " FontSize="12" Foreground="#B0B0B0"/>
+                            <TextBlock Text="Shadow Empire" FontSize="12" Foreground="#E0E0E0" Name="AllianceNameText"/>
+                            <TextBlock Text=" | " FontSize="12" Foreground="#666" Margin="10,0"/>
+                            <TextBlock Text="Members: " FontSize="12" Foreground="#B0B0B0"/>
+                            <TextBlock Text="47" FontSize="12" Foreground="#E0E0E0" Name="MemberCountText"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <Button Content="🔄 Refresh" Classes="guild-button" 
+                                Click="RefreshGuild_Click"/>
+                        <Button Content="📊 Statistics" Classes="guild-button" 
+                                Click="ViewStatistics_Click"/>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <!-- Guild Content -->
+        <Border Grid.Row="1" Classes="guild-panel">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="300"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Guild Members List -->
+                <ListBox Grid.Column="0" Name="GuildMembersListBox" Classes="guild-list">
+                    <ListBoxItem Classes="guild-entry">
+                        <Border Classes="guild-card">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Player Icon -->
+                                <Border Grid.Column="0" Width="40" Height="40" 
+                                        Background="#4CAF50" CornerRadius="20" Margin="0,0,10,0">
+                                    <TextBlock Text="👑" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+
+                                <!-- Player Info -->
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="GuildMaster" Classes="guild-name"/>
+                                    <TextBlock Text="Guild Master" Classes="guild-info"/>
+                                    <TextBlock Text="Online" FontSize="10" Foreground="#4CAF50"/>
+                                </StackPanel>
+
+                                <!-- Player Stats -->
+                                <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                                    <TextBlock Text="T8.3" Classes="guild-value"/>
+                                    <TextBlock Text="1,250 Fame/h" FontSize="10" Foreground="#B0B0B0"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </ListBoxItem>
+
+                    <ListBoxItem Classes="guild-entry">
+                        <Border Classes="guild-card">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Player Icon -->
+                                <Border Grid.Column="0" Width="40" Height="40" 
+                                        Background="#2196F3" CornerRadius="20" Margin="0,0,10,0">
+                                    <TextBlock Text="⚔️" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+
+                                <!-- Player Info -->
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="WarriorPlayer" Classes="guild-name"/>
+                                    <TextBlock Text="Officer" Classes="guild-info"/>
+                                    <TextBlock Text="Online" FontSize="10" Foreground="#4CAF50"/>
+                                </StackPanel>
+
+                                <!-- Player Stats -->
+                                <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                                    <TextBlock Text="T7.2" Classes="guild-value"/>
+                                    <TextBlock Text="890 Fame/h" FontSize="10" Foreground="#B0B0B0"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </ListBoxItem>
+
+                    <ListBoxItem Classes="guild-entry">
+                        <Border Classes="guild-card">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Player Icon -->
+                                <Border Grid.Column="0" Width="40" Height="40" 
+                                        Background="#FF9800" CornerRadius="20" Margin="0,0,10,0">
+                                    <TextBlock Text="🧙" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+
+                                <!-- Player Info -->
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="MagePlayer" Classes="guild-name"/>
+                                    <TextBlock Text="Member" Classes="guild-info"/>
+                                    <TextBlock Text="Offline" FontSize="10" Foreground="#E74C3C"/>
+                                </StackPanel>
+
+                                <!-- Player Stats -->
+                                <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                                    <TextBlock Text="T6.1" Classes="guild-value"/>
+                                    <TextBlock Text="650 Fame/h" FontSize="10" Foreground="#B0B0B0"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </ListBoxItem>
+
+                    <ListBoxItem Classes="guild-entry">
+                        <Border Classes="guild-card">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Player Icon -->
+                                <Border Grid.Column="0" Width="40" Height="40" 
+                                        Background="#9C27B0" CornerRadius="20" Margin="0,0,10,0">
+                                    <TextBlock Text="🏹" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+
+                                <!-- Player Info -->
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="ArcherPlayer" Classes="guild-name"/>
+                                    <TextBlock Text="Member" Classes="guild-info"/>
+                                    <TextBlock Text="Online" FontSize="10" Foreground="#4CAF50"/>
+                                </StackPanel>
+
+                                <!-- Player Stats -->
+                                <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                                    <TextBlock Text="T5.4" Classes="guild-value"/>
+                                    <TextBlock Text="420 Fame/h" FontSize="10" Foreground="#B0B0B0"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </ListBoxItem>
+                </ListBox>
+
+                <!-- Guild Statistics Panel -->
+                <Border Grid.Column="1" Classes="guild-panel" Margin="10,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="Guild Statistics" Classes="guild-title"/>
+                        
+                        <Border Classes="guild-panel" Margin="0,0,0,10">
+                            <StackPanel>
+                                <TextBlock Text="Activity Summary" FontSize="12" FontWeight="Bold" 
+                                           Foreground="#B0B0B0" Margin="0,0,0,5"/>
+                                
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,5,5">
+                                        <TextBlock Text="Online Members:" FontSize="10" Foreground="#B0B0B0"/>
+                                        <TextBlock Text="23" FontSize="12" Foreground="#4CAF50" Name="OnlineMembersText"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="0" Grid.Column="1" Margin="5,0,0,5">
+                                        <TextBlock Text="Total Fame:" FontSize="10" Foreground="#B0B0B0"/>
+                                        <TextBlock Text="1.2M" FontSize="12" Foreground="#E0E0E0" Name="TotalFameText"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,5,5">
+                                        <TextBlock Text="Guild Level:" FontSize="10" Foreground="#B0B0B0"/>
+                                        <TextBlock Text="15" FontSize="12" Foreground="#FFD700" Name="GuildLevelText"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,5">
+                                        <TextBlock Text="Territories:" FontSize="10" Foreground="#B0B0B0"/>
+                                        <TextBlock Text="3" FontSize="12" Foreground="#E0E0E0" Name="TerritoriesText"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,0,5,5">
+                                        <TextBlock Text="Kill Fame:" FontSize="10" Foreground="#B0B0B0"/>
+                                        <TextBlock Text="850K" FontSize="12" Foreground="#E74C3C" Name="KillFameText"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="2" Grid.Column="1" Margin="5,0,0,5">
+                                        <TextBlock Text="Gathering Fame:" FontSize="10" Foreground="#B0B0B0"/>
+                                        <TextBlock Text="350K" FontSize="12" Foreground="#27AE60" Name="GatheringFameText"/>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Classes="guild-panel" Margin="0,0,0,10">
+                            <StackPanel>
+                                <TextBlock Text="Recent Activity" FontSize="12" FontWeight="Bold" 
+                                           Foreground="#B0B0B0" Margin="0,0,0,5"/>
+                                
+                                <StackPanel>
+                                    <TextBlock Text="• PlayerName joined the guild" FontSize="10" Foreground="#E0E0E0" Margin="0,0,0,2"/>
+                                    <TextBlock Text="• Territory captured in Bridgewatch" FontSize="10" Foreground="#E0E0E0" Margin="0,0,0,2"/>
+                                    <TextBlock Text="• Guild war started vs Red Dragons" FontSize="10" Foreground="#E0E0E0" Margin="0,0,0,2"/>
+                                    <TextBlock Text="• Weekly reset - new objectives" FontSize="10" Foreground="#E0E0E0" Margin="0,0,0,2"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Action Buttons -->
+                        <StackPanel>
+                            <Button Content="👥 Manage Members" Classes="guild-button" 
+                                    Click="ManageMembers_Click" Margin="0,0,0,5"/>
+                            <Button Content="🏰 Guild Wars" Classes="guild-button" 
+                                    Click="GuildWars_Click" Margin="0,0,0,5"/>
+                            <Button Content="📊 Detailed Stats" Classes="guild-button" 
+                                    Click="DetailedStats_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- Status Bar -->
+        <Border Grid.Row="2" Background="#1E1E1E" BorderBrush="#4A4A4A" BorderThickness="0,1,0,0" Height="30">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0">
+                <TextBlock Text="Last update: " FontSize="12" Foreground="#B0B0B0"/>
+                <TextBlock Text="1 minute ago" FontSize="12" Foreground="#E0E0E0" Name="LastUpdateText"/>
+                <TextBlock Text=" | " FontSize="12" Foreground="#666" Margin="10,0"/>
+                <TextBlock Text="Guild ID: " FontSize="12" Foreground="#B0B0B0"/>
+                <TextBlock Text="DK-001" FontSize="12" Foreground="#E0E0E0" Name="GuildIdText"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

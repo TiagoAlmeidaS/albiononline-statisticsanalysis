@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="StatisticsAnalysisTool.macOS.Controls.SimpleTradeMonitoringControl">
+
+    <UserControl.Styles>
+        <Style Selector="Border">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+        
+        <Style Selector="TextBlock">
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+        
+        <Style Selector="Button">
+            <Setter Property="Background" Value="#FF6B35"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Setter Property="BorderBrush" Value="#FF6B35"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Margin" Value="4"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+        
+        <Style Selector="Button:pointerover">
+            <Setter Property="Background" Value="#FF7A4A"/>
+        </Style>
+    </UserControl.Styles>
+
+    <Grid>
+        <Border Background="#2D2D2D" BorderBrush="#4A4A4A" BorderThickness="1" CornerRadius="3" Padding="20">
+            <StackPanel>
+                <TextBlock Text="💰 Trade Monitoring" FontSize="18" FontWeight="Bold" 
+                           Foreground="#E0E0E0" Margin="0,0,0,20"/>
+                
+                <TextBlock Text="Trade monitoring functionality will be implemented here." 
+                           FontSize="14" Foreground="#B0B0B0" Margin="0,0,0,20"/>
+                
+                <Button Content="Start Monitoring" Click="StartMonitoring_Click" Width="150" HorizontalAlignment="Left"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

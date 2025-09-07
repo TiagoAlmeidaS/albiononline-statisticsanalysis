@@ -1,0 +1,362 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="StatisticsAnalysisTool.macOS.Controls.LoggingControl">
+
+    <UserControl.Styles>
+        <!-- Albion Online Logging Styles -->
+        <Style Selector="Border.logging-panel">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <Style Selector="TextBlock.logging-title">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#FF6B35"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <Style Selector="Button.logging-button">
+            <Setter Property="Background" Value="#FF6B35"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FF6B35"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+
+        <Style Selector="Button.logging-button:pointerover">
+            <Setter Property="Background" Value="#FF7A4A"/>
+        </Style>
+
+        <Style Selector="Button.logging-button:pressed">
+            <Setter Property="Background" Value="#E55A2B"/>
+        </Style>
+
+        <Style Selector="Button.export-button">
+            <Setter Property="Background" Value="#27AE60"/>
+            <Setter Property="BorderBrush" Value="#229954"/>
+        </Style>
+
+        <Style Selector="Button.export-button:pointerover">
+            <Setter Property="Background" Value="#2ECC71"/>
+        </Style>
+
+        <Style Selector="ListBox.logging-list">
+            <Setter Property="Background" Value="#1E1E1E"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+        </Style>
+
+        <Style Selector="ListBoxItem.log-entry">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+
+        <Style Selector="ListBoxItem.log-entry:selected">
+            <Setter Property="Background" Value="#FF6B35"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+        </Style>
+
+        <Style Selector="ListBoxItem.log-entry:pointerover">
+            <Setter Property="Background" Value="#3D3D3D"/>
+        </Style>
+
+        <Style Selector="TextBlock.log-timestamp">
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Foreground" Value="#666"/>
+            <Setter Property="Width" Value="80"/>
+        </Style>
+
+        <Style Selector="TextBlock.log-level">
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Width" Value="60"/>
+        </Style>
+
+        <Style Selector="TextBlock.log-message">
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+        </Style>
+
+        <Style Selector="ComboBox.logging-combo">
+            <Setter Property="Background" Value="#1E1E1E"/>
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+        </Style>
+
+        <Style Selector="CheckBox.logging-check">
+            <Setter Property="Foreground" Value="#E0E0E0"/>
+        </Style>
+    </UserControl.Styles>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Logging Header -->
+        <Border Grid.Row="0" Classes="logging-panel">
+            <StackPanel>
+                <TextBlock Text="📝 Activity Logging" Classes="logging-title"/>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                            <TextBlock Text="Status: " FontSize="14" Foreground="#B0B0B0"/>
+                            <TextBlock Text="Active" FontSize="14" Foreground="#4CAF50" Name="StatusText"/>
+                        </StackPanel>
+                        
+                        <!-- Filter Controls -->
+                        <StackPanel Orientation="Horizontal">
+                            <ComboBox Name="LogLevelFilter" Classes="logging-combo" Width="120" Margin="0,0,10,0" SelectedIndex="0">
+                                <ComboBoxItem Content="All Levels"/>
+                                <ComboBoxItem Content="Debug"/>
+                                <ComboBoxItem Content="Info"/>
+                                <ComboBoxItem Content="Warning"/>
+                                <ComboBoxItem Content="Error"/>
+                            </ComboBox>
+
+                            <ComboBox Name="LogTypeFilter" Classes="logging-combo" Width="150" Margin="0,0,10,0" SelectedIndex="0">
+                                <ComboBoxItem Content="All Types"/>
+                                <ComboBoxItem Content="Combat"/>
+                                <ComboBoxItem Content="Gathering"/>
+                                <ComboBoxItem Content="Trading"/>
+                                <ComboBoxItem Content="System"/>
+                            </ComboBox>
+
+                            <CheckBox Name="AutoScrollCheckBox" Content="Auto-scroll" 
+                                      Classes="logging-check" IsChecked="True" Margin="0,0,10,0"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <Button Content="🔄 Clear" Classes="logging-button" 
+                                Click="ClearLogs_Click"/>
+                        <Button Content="📁 Export" Classes="logging-button export-button" 
+                                Click="ExportLogs_Click"/>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <!-- Log Content -->
+        <Border Grid.Row="1" Classes="logging-panel">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="300"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Log List -->
+                <ListBox Grid.Column="0" Name="LogListBox" Classes="logging-list">
+                    <ListBoxItem Classes="log-entry">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="14:30:25" Classes="log-timestamp"/>
+                            <TextBlock Grid.Column="1" Text="INFO" Classes="log-level" Foreground="#4CAF50"/>
+                            <TextBlock Grid.Column="2" Text="Bot started successfully" Classes="log-message"/>
+                        </Grid>
+                    </ListBoxItem>
+
+                    <ListBoxItem Classes="log-entry">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="14:30:30" Classes="log-timestamp"/>
+                            <TextBlock Grid.Column="1" Text="DEBUG" Classes="log-level" Foreground="#2196F3"/>
+                            <TextBlock Grid.Column="2" Text="Looking for fishing spot..." Classes="log-message"/>
+                        </Grid>
+                    </ListBoxItem>
+
+                    <ListBoxItem Classes="log-entry">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="14:30:45" Classes="log-timestamp"/>
+                            <TextBlock Grid.Column="1" Text="INFO" Classes="log-level" Foreground="#4CAF50"/>
+                            <TextBlock Grid.Column="2" Text="Bobber detected! Starting fishing..." Classes="log-message"/>
+                        </Grid>
+                    </ListBoxItem>
+
+                    <ListBoxItem Classes="log-entry">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="14:31:15" Classes="log-timestamp"/>
+                            <TextBlock Grid.Column="1" Text="SUCCESS" Classes="log-level" Foreground="#27AE60"/>
+                            <TextBlock Grid.Column="2" Text="Caught Tuna! +50 Fame, +25 Silver" Classes="log-message"/>
+                        </Grid>
+                    </ListBoxItem>
+
+                    <ListBoxItem Classes="log-entry">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="14:31:45" Classes="log-timestamp"/>
+                            <TextBlock Grid.Column="1" Text="WARNING" Classes="log-level" Foreground="#FF9800"/>
+                            <TextBlock Grid.Column="2" Text="Low energy detected (25%)" Classes="log-message"/>
+                        </Grid>
+                    </ListBoxItem>
+
+                    <ListBoxItem Classes="log-entry">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="14:32:00" Classes="log-timestamp"/>
+                            <TextBlock Grid.Column="1" Text="ERROR" Classes="log-level" Foreground="#E74C3C"/>
+                            <TextBlock Grid.Column="2" Text="Failed to detect bobber - retrying..." Classes="log-message"/>
+                        </Grid>
+                    </ListBoxItem>
+                </ListBox>
+
+                <!-- Log Statistics Panel -->
+                <Border Grid.Column="1" Classes="logging-panel" Margin="10,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="Log Statistics" Classes="logging-title"/>
+                        
+                        <Border Classes="logging-panel" Margin="0,0,0,10">
+                            <StackPanel>
+                                <TextBlock Text="Session Summary" FontSize="12" FontWeight="Bold" 
+                                           Foreground="#B0B0B0" Margin="0,0,0,5"/>
+                                
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,5,5">
+                                        <TextBlock Text="Total Logs:" FontSize="10" Foreground="#B0B0B0"/>
+                                        <TextBlock Text="156" FontSize="12" Foreground="#E0E0E0" Name="TotalLogsText"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="0" Grid.Column="1" Margin="5,0,0,5">
+                                        <TextBlock Text="Errors:" FontSize="10" Foreground="#B0B0B0"/>
+                                        <TextBlock Text="3" FontSize="12" Foreground="#E74C3C" Name="ErrorCountText"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,5,5">
+                                        <TextBlock Text="Warnings:" FontSize="10" Foreground="#B0B0B0"/>
+                                        <TextBlock Text="8" FontSize="12" Foreground="#FF9800" Name="WarningCountText"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,5">
+                                        <TextBlock Text="Success:" FontSize="10" Foreground="#B0B0B0"/>
+                                        <TextBlock Text="45" FontSize="12" Foreground="#27AE60" Name="SuccessCountText"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,0,5,5">
+                                        <TextBlock Text="Session Time:" FontSize="10" Foreground="#B0B0B0"/>
+                                        <TextBlock Text="02:15:30" FontSize="12" Foreground="#E0E0E0" Name="SessionTimeText"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="2" Grid.Column="1" Margin="5,0,0,5">
+                                        <TextBlock Text="Log Rate:" FontSize="10" Foreground="#B0B0B0"/>
+                                        <TextBlock Text="1.2/min" FontSize="12" Foreground="#E0E0E0" Name="LogRateText"/>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Classes="logging-panel" Margin="0,0,0,10">
+                            <StackPanel>
+                                <TextBlock Text="Log Types" FontSize="12" FontWeight="Bold" 
+                                           Foreground="#B0B0B0" Margin="0,0,0,5"/>
+                                
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                        <Ellipse Width="8" Height="8" Fill="#4CAF50" Margin="0,0,5,0"/>
+                                        <TextBlock Text="Combat: 45" FontSize="10" Foreground="#E0E0E0"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                        <Ellipse Width="8" Height="8" Fill="#2196F3" Margin="0,0,5,0"/>
+                                        <TextBlock Text="Gathering: 32" FontSize="10" Foreground="#E0E0E0"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                        <Ellipse Width="8" Height="8" Fill="#FF9800" Margin="0,0,5,0"/>
+                                        <TextBlock Text="Trading: 18" FontSize="10" Foreground="#E0E0E0"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,3">
+                                        <Ellipse Width="8" Height="8" Fill="#9C27B0" Margin="0,0,5,0"/>
+                                        <TextBlock Text="System: 61" FontSize="10" Foreground="#E0E0E0"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Action Buttons -->
+                        <StackPanel>
+                            <Button Content="📊 View Analytics" Classes="logging-button" 
+                                    Click="ViewAnalytics_Click" Margin="0,0,0,5"/>
+                            <Button Content="🔍 Search Logs" Classes="logging-button" 
+                                    Click="SearchLogs_Click" Margin="0,0,0,5"/>
+                            <Button Content="⚙️ Log Settings" Classes="logging-button" 
+                                    Click="OpenLogSettings_Click"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- Status Bar -->
+        <Border Grid.Row="2" Background="#1E1E1E" BorderBrush="#4A4A4A" BorderThickness="0,1,0,0" Height="30">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0">
+                <TextBlock Text="Log file: " FontSize="12" Foreground="#B0B0B0"/>
+                <TextBlock Text="activity_2024-01-15.log" FontSize="12" Foreground="#E0E0E0" Name="LogFileNameText"/>
+                <TextBlock Text=" | " FontSize="12" Foreground="#666" Margin="10,0"/>
+                <TextBlock Text="Size: " FontSize="12" Foreground="#B0B0B0"/>
+                <TextBlock Text="2.4 MB" FontSize="12" Foreground="#E0E0E0" Name="LogFileSizeText"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

@@ -1,0 +1,257 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
+             x:Class="StatisticsAnalysisTool.macOS.Controls.BotControl">
+
+    <UserControl.Styles>
+        <!-- Albion Online Bot Styles -->
+        <Style Selector="Border.bot-panel">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="BorderBrush" Value="#4A4A4A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <Style Selector="TextBlock.bot-title">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="#FF6B35"/>
+            <Setter Property="Margin" Value="0,0,0,10"/>
+        </Style>
+
+        <Style Selector="Button.bot-button">
+            <Setter Property="Background" Value="#FF6B35"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FF6B35"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+
+        <Style Selector="Button.bot-button:pointerover">
+            <Setter Property="Background" Value="#FF7A4A"/>
+        </Style>
+
+        <Style Selector="Button.bot-button:pressed">
+            <Setter Property="Background" Value="#E55A2B"/>
+        </Style>
+
+        <Style Selector="Button.start-button">
+            <Setter Property="Background" Value="#27AE60"/>
+            <Setter Property="BorderBrush" Value="#229954"/>
+        </Style>
+
+        <Style Selector="Button.start-button:pointerover">
+            <Setter Property="Background" Value="#2ECC71"/>
+        </Style>
+
+        <Style Selector="Button.stop-button">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Setter Property="BorderBrush" Value="#C0392B"/>
+        </Style>
+
+        <Style Selector="Button.stop-button:pointerover">
+            <Setter Property="Background" Value="#EC7063"/>
+        </Style>
+
+        <Style Selector="Border.status-indicator">
+            <Setter Property="Width" Value="12"/>
+            <Setter Property="Height" Value="12"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Margin" Value="5,0,0,0"/>
+        </Style>
+
+        <Style Selector="ProgressBar.bot-progress">
+            <Setter Property="Background" Value="#1E1E1E"/>
+            <Setter Property="Foreground" Value="#FF6B35"/>
+            <Setter Property="Height" Value="8"/>
+        </Style>
+    </UserControl.Styles>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Bot Status Header -->
+        <Border Grid.Row="0" Classes="bot-panel">
+            <StackPanel>
+                <TextBlock Text="🤖 Bot Control" Classes="bot-title"/>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                            <TextBlock Text="Status: " FontSize="14" Foreground="#B0B0B0"/>
+                            <TextBlock Text="Stopped" FontSize="14" Foreground="#E0E0E0" Name="BotStatusText"/>
+                            <Border Background="#E74C3C" Classes="status-indicator" Name="StatusIndicator"/>
+                        </StackPanel>
+                        
+                        <TextBlock Text="Ready to start bot operations" FontSize="12" Foreground="#B0B0B0" Name="StatusDescriptionText"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <Button Content="▶ Start Bot" Classes="bot-button start-button" 
+                                Click="StartBot_Click" Name="StartButton"/>
+                        <Button Content="■ Stop Bot" Classes="bot-button stop-button" 
+                                Click="StopBot_Click" Name="StopButton" IsEnabled="False"/>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <!-- Bot Configuration and Status -->
+        <Border Grid.Row="1" Classes="bot-panel">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Configuration Panel -->
+                <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                    <TextBlock Text="Configuration" Classes="bot-title"/>
+                    
+                    <!-- Bot Type Selection -->
+                    <StackPanel Margin="0,0,0,15">
+                        <TextBlock Text="Bot Type:" FontSize="12" Foreground="#B0B0B0" Margin="0,0,0,5"/>
+                        <ComboBox Name="BotTypeComboBox" SelectedIndex="0">
+                            <ComboBoxItem Content="Fishing Bot"/>
+                            <ComboBoxItem Content="Gathering Bot"/>
+                            <ComboBoxItem Content="Combat Bot"/>
+                            <ComboBoxItem Content="Trading Bot"/>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <!-- Safety Settings -->
+                    <StackPanel Margin="0,0,0,15">
+                        <TextBlock Text="Safety Settings:" FontSize="12" Foreground="#B0B0B0" Margin="0,0,0,5"/>
+                        
+                        <CheckBox Name="HealthCheckBox" Content="Stop if health &lt; 50%" 
+                                  Foreground="#E0E0E0" Margin="0,0,0,5"/>
+                        <CheckBox Name="EnergyCheckBox" Content="Stop if energy &lt; 30%" 
+                                  Foreground="#E0E0E0" Margin="0,0,0,5"/>
+                        <CheckBox Name="SilverCheckBox" Content="Stop if silver &lt; 1000" 
+                                  Foreground="#E0E0E0" Margin="0,0,0,5"/>
+                        <CheckBox Name="PvPZoneCheckBox" Content="Avoid PvP zones" 
+                                  Foreground="#E0E0E0" IsChecked="True"/>
+                    </StackPanel>
+
+                    <!-- Bot Behavior -->
+                    <StackPanel Margin="0,0,0,15">
+                        <TextBlock Text="Behavior:" FontSize="12" Foreground="#B0B0B0" Margin="0,0,0,5"/>
+                        
+                        <StackPanel Margin="0,0,0,5">
+                            <TextBlock Text="Max Attempts:" FontSize="10" Foreground="#B0B0B0"/>
+                            <TextBox Name="MaxAttemptsTextBox" Text="10" Width="100" HorizontalAlignment="Left"/>
+                        </StackPanel>
+                        
+                        <StackPanel Margin="0,0,0,5">
+                            <TextBlock Text="Cooldown (seconds):" FontSize="10" Foreground="#B0B0B0"/>
+                            <TextBox Name="CooldownTextBox" Text="5" Width="100" HorizontalAlignment="Left"/>
+                        </StackPanel>
+                        
+                        <StackPanel>
+                            <TextBlock Text="Max Failures:" FontSize="10" Foreground="#B0B0B0"/>
+                            <TextBox Name="MaxFailuresTextBox" Text="3" Width="100" HorizontalAlignment="Left"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Status and Statistics Panel -->
+                <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                    <TextBlock Text="Status &amp; Statistics" Classes="bot-title"/>
+                    
+                    <!-- Current Activity -->
+                    <Border Classes="bot-panel" Margin="0,0,0,10">
+                        <StackPanel>
+                            <TextBlock Text="Current Activity" FontSize="12" FontWeight="Bold" 
+                                       Foreground="#B0B0B0" Margin="0,0,0,5"/>
+                            <TextBlock Text="Idle" FontSize="14" Foreground="#E0E0E0" Name="CurrentActivityText"/>
+                            
+                            <StackPanel Margin="0,10,0,0">
+                                <TextBlock Text="Progress:" FontSize="10" Foreground="#B0B0B0"/>
+                                <ProgressBar Value="0" Maximum="100" Classes="bot-progress" Name="ProgressBar"/>
+                                <TextBlock Text="0%" FontSize="10" Foreground="#B0B0E0" Name="ProgressText" 
+                                           HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Statistics -->
+                    <Border Classes="bot-panel">
+                        <StackPanel>
+                            <TextBlock Text="Session Statistics" FontSize="12" FontWeight="Bold" 
+                                       Foreground="#B0B0B0" Margin="0,0,0,10"/>
+                            
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,5,5">
+                                    <TextBlock Text="Actions:" FontSize="10" Foreground="#B0B0B0"/>
+                                    <TextBlock Text="0" FontSize="12" Foreground="#E0E0E0" Name="ActionsText"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="0" Grid.Column="1" Margin="5,0,0,5">
+                                    <TextBlock Text="Success:" FontSize="10" Foreground="#B0B0B0"/>
+                                    <TextBlock Text="0" FontSize="12" Foreground="#4CAF50" Name="SuccessText"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,5,5">
+                                    <TextBlock Text="Failures:" FontSize="10" Foreground="#B0B0B0"/>
+                                    <TextBlock Text="0" FontSize="12" Foreground="#E74C3C" Name="FailuresText"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,5">
+                                    <TextBlock Text="Success Rate:" FontSize="10" Foreground="#B0B0B0"/>
+                                    <TextBlock Text="0%" FontSize="12" Foreground="#FFD700" Name="SuccessRateText"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,0,5,5">
+                                    <TextBlock Text="Runtime:" FontSize="10" Foreground="#B0B0B0"/>
+                                    <TextBlock Text="00:00:00" FontSize="12" Foreground="#E0E0E0" Name="RuntimeText"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Grid.Column="1" Margin="5,0,0,5">
+                                    <TextBlock Text="Last Action:" FontSize="10" Foreground="#B0B0B0"/>
+                                    <TextBlock Text="None" FontSize="12" Foreground="#E0E0E0" Name="LastActionText"/>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Action Buttons -->
+        <Border Grid.Row="2" Background="#1E1E1E" BorderBrush="#4A4A4A" BorderThickness="0,1,0,0" Height="50">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0">
+                <Button Content="⚙️ Settings" Classes="bot-button" Click="OpenSettings_Click"/>
+                <Button Content="📊 Statistics" Classes="bot-button" Click="OpenStatistics_Click"/>
+                <Button Content="📝 Logs" Classes="bot-button" Click="OpenLogs_Click"/>
+                <Button Content="🔄 Reset" Classes="bot-button" Click="ResetBot_Click"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
