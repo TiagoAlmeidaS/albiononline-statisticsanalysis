@@ -28,5 +28,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StatisticsAnalysisTool.Core\StatisticsAnalysisTool.Core.csproj" />
+    <ProjectReference Include="..\StatisticAnalysisTool.Extractor\StatisticAnalysisTool.Extractor.csproj" />
   </ItemGroup>
 </Project>

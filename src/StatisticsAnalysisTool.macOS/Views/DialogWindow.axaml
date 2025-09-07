@@ -83,14 +83,11 @@
             <!-- Buttons -->
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Content="{Binding YesButtonText, FallbackValue=Yes}" FontSize="14" FontWeight="Bold" 
-                        Height="36" Width="120" Click="YesButton_Click" Margin="0,0,10,0"
-                        Visibility="{Binding ShowYesNoButtons, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        Height="36" Width="120" Click="YesButton_Click" Margin="0,0,10,0"/>
                 <Button Content="{Binding NoButtonText, FallbackValue=No}" FontSize="14" FontWeight="Bold" 
-                        Height="36" Width="120" Click="NoButton_Click" Margin="10,0,0,0"
-                        Visibility="{Binding ShowYesNoButtons, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        Height="36" Width="120" Click="NoButton_Click" Margin="10,0,0,0"/>
                 <Button Content="{Binding OkButtonText, FallbackValue=OK}" FontSize="14" FontWeight="Bold" 
-                        Height="36" Width="120" Click="OkButton_Click"
-                        Visibility="{Binding ShowOkButton, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        Height="36" Width="120" Click="OkButton_Click"/>
             </StackPanel>
         </Grid>
     </Grid>

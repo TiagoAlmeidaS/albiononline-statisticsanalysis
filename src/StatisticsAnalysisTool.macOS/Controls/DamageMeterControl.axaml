@@ -172,7 +172,7 @@
 
                             <!-- Damage Bar -->
                             <Border Grid.Column="0" Grid.ColumnSpan="4" Classes="damage-bar" Margin="40,25,0,0">
-                                <Border Background="#4CAF50" Width="45.2%" Height="100%" CornerRadius="1"/>
+                                <Border Background="#4CAF50" Width="226" Height="20" CornerRadius="1"/>
                             </Border>
                         </Grid>
                     </ListBoxItem>
@@ -208,7 +208,7 @@
 
                             <!-- Damage Bar -->
                             <Border Grid.Column="0" Grid.ColumnSpan="4" Classes="damage-bar" Margin="40,25,0,0">
-                                <Border Background="#2196F3" Width="25.8%" Height="100%" CornerRadius="1"/>
+                                <Border Background="#2196F3" Width="129" Height="20" CornerRadius="1"/>
                             </Border>
                         </Grid>
                     </ListBoxItem>
@@ -244,7 +244,7 @@
 
                             <!-- Damage Bar -->
                             <Border Grid.Column="0" Grid.ColumnSpan="4" Classes="damage-bar" Margin="40,25,0,0">
-                                <Border Background="#FF9800" Width="18.4%" Height="100%" CornerRadius="1"/>
+                                <Border Background="#FF9800" Width="92" Height="20" CornerRadius="1"/>
                             </Border>
                         </Grid>
                     </ListBoxItem>
@@ -280,7 +280,7 @@
 
                             <!-- Damage Bar -->
                             <Border Grid.Column="0" Grid.ColumnSpan="4" Classes="damage-bar" Margin="40,25,0,0">
-                                <Border Background="#9C27B0" Width="7.7%" Height="100%" CornerRadius="1"/>
+                                <Border Background="#9C27B0" Width="38" Height="20" CornerRadius="1"/>
                             </Border>
                         </Grid>
                     </ListBoxItem>

@@ -27,8 +27,6 @@
             <Setter Property="Background" Value="#1E1E1E"/>
             <Setter Property="Foreground" Value="#E0E0E0"/>
             <Setter Property="BorderBrush" Value="#4A4A4A"/>
-            <Setter Property="SelectionForeground" Value="#FFFFFF"/>
-            <Setter Property="SelectionBackground" Value="#FF6B35"/>
             <Setter Property="Padding" Value="10,8"/>
             <Setter Property="FontSize" Value="14"/>
         </Style>

@@ -29,7 +29,6 @@
         
         <Style Selector="HyperlinkButton:pointerover">
             <Setter Property="Foreground" Value="#FF7A4A"/>
-            <Setter Property="TextDecorations" Value="Underline"/>
         </Style>
     </UserControl.Styles>
 

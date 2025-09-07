@@ -3,6 +3,7 @@ using Avalonia.Interactivity;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace StatisticsAnalysisTool.macOS.Controls;
 

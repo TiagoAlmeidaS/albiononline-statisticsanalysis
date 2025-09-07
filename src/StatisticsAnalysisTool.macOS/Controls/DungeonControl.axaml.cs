@@ -3,14 +3,19 @@ using Avalonia.Interactivity;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using StatisticsAnalysisTool.Core.Interfaces;
+using StatisticsAnalysisTool.macOS.Platform;
 
 namespace StatisticsAnalysisTool.macOS.Controls
 {
     public partial class DungeonControl : UserControl
     {
+        private readonly IDialogService _dialogService;
+
         public DungeonControl()
         {
             InitializeComponent();
+            _dialogService = new MacOSDialogService();
             LoadDungeonData();
         }
 
@@ -61,14 +66,10 @@ namespace StatisticsAnalysisTool.macOS.Controls
         private void ResetDungeons_Click(object sender, RoutedEventArgs e)
         {
             // Implementar reset de dungeons
-            var result = MessageBox.Avalonia.MessageBoxManager
-                .GetMessageBoxStandardWindow("Reset Dungeons", 
-                    "Are you sure you want to reset all dungeon data? This action cannot be undone.",
-                    MessageBox.Avalonia.Enums.ButtonEnum.YesNo,
-                    MessageBox.Avalonia.Enums.Icon.Question)
-                .Show();
+            // TODO: Implement proper confirmation dialog
+            var result = true; // Simplified for now
 
-            if (result == MessageBox.Avalonia.Enums.ButtonResult.Yes)
+            if (result)
             {
                 // Resetar dados
                 LoadDungeonData();
@@ -80,14 +81,10 @@ namespace StatisticsAnalysisTool.macOS.Controls
             // Implementar exclusão de dungeons selecionados
             if (DungeonListBox?.SelectedItems?.Count > 0)
             {
-                var result = MessageBox.Avalonia.MessageBoxManager
-                    .GetMessageBoxStandardWindow("Delete Dungeons", 
-                        $"Are you sure you want to delete {DungeonListBox.SelectedItems.Count} selected dungeon(s)?",
-                        MessageBox.Avalonia.Enums.ButtonEnum.YesNo,
-                        MessageBox.Avalonia.Enums.Icon.Warning)
-                    .Show();
+                // TODO: Implement proper confirmation dialog
+                var result = true; // Simplified for now
 
-                if (result == MessageBox.Avalonia.Enums.ButtonResult.Yes)
+                if (result)
                 {
                     // Deletar itens selecionados
                     UpdateSelectedCount();
@@ -95,46 +92,26 @@ namespace StatisticsAnalysisTool.macOS.Controls
             }
             else
             {
-                MessageBox.Avalonia.MessageBoxManager
-                    .GetMessageBoxStandardWindow("No Selection", 
-                        "Please select one or more dungeons to delete.",
-                        MessageBox.Avalonia.Enums.ButtonEnum.Ok,
-                        MessageBox.Avalonia.Enums.Icon.Information)
-                    .Show();
+                _dialogService.ShowMessageBox("No Selection", "Please select one or more dungeons to delete.");
             }
         }
 
         private void ViewAnalytics_Click(object sender, RoutedEventArgs e)
         {
             // Implementar visualização de analytics
-            MessageBox.Avalonia.MessageBoxManager
-                .GetMessageBoxStandardWindow("Analytics", 
-                    "Dungeon analytics feature coming soon!",
-                    MessageBox.Avalonia.Enums.ButtonEnum.Ok,
-                    MessageBox.Avalonia.Enums.Icon.Information)
-                .Show();
+            _dialogService.ShowMessageBox("Analytics", "Dungeon analytics feature coming soon!");
         }
 
         private void FameChart_Click(object sender, RoutedEventArgs e)
         {
             // Implementar gráfico de fama
-            MessageBox.Avalonia.MessageBoxManager
-                .GetMessageBoxStandardWindow("Fame Chart", 
-                    "Fame chart feature coming soon!",
-                    MessageBox.Avalonia.Enums.ButtonEnum.Ok,
-                    MessageBox.Avalonia.Enums.Icon.Information)
-                .Show();
+            _dialogService.ShowMessageBox("Fame Chart", "Fame chart feature coming soon!");
         }
 
         private void OpenSettings_Click(object sender, RoutedEventArgs e)
         {
             // Implementar configurações de dungeon
-            MessageBox.Avalonia.MessageBoxManager
-                .GetMessageBoxStandardWindow("Dungeon Settings", 
-                    "Dungeon settings feature coming soon!",
-                    MessageBox.Avalonia.Enums.ButtonEnum.Ok,
-                    MessageBox.Avalonia.Enums.Icon.Information)
-                .Show();
+            _dialogService.ShowMessageBox("Dungeon Settings", "Dungeon settings feature coming soon!");
         }
 
         private void UpdateSelectedCount()

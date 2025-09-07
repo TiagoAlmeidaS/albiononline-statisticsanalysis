@@ -60,4 +60,24 @@ public class MacOSDialogService : IDialogService
         
         process.Start();
     }
+    
+    public string? ShowFolderDialog(string title)
+    {
+        var process = new Process
+        {
+            StartInfo = new ProcessStartInfo
+            {
+                FileName = "osascript",
+                Arguments = $"-e 'tell application \"System Events\" to return POSIX path of (choose folder with prompt \"{title}\")'",
+                UseShellExecute = false,
+                RedirectStandardOutput = true
+            }
+        };
+        
+        process.Start();
+        var result = process.StandardOutput.ReadToEnd();
+        process.WaitForExit();
+        
+        return process.ExitCode == 0 ? result.Trim() : null;
+    }
 }

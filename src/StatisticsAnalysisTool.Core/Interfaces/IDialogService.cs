@@ -28,4 +28,11 @@ public interface IDialogService
     /// <param name="title">Título da mensagem</param>
     /// <param name="message">Conteúdo da mensagem</param>
     void ShowMessageBox(string title, string message);
+    
+    /// <summary>
+    /// Mostra um diálogo para selecionar pasta
+    /// </summary>
+    /// <param name="title">Título do diálogo</param>
+    /// <returns>Caminho da pasta selecionada ou null se cancelado</returns>
+    string? ShowFolderDialog(string title);
 }
